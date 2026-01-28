@@ -13,7 +13,7 @@ func initPackage() {
 
 	utils.PanicOnError(err)
 
-	utils.RunCmd("corepack", "use", "pnpm@latest")
+	utils.UsePNPM()
 
 	utils.AskSortJSON("package.json")
 }
