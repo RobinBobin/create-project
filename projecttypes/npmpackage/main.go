@@ -1,9 +1,11 @@
 package npmpackage
 
+import (
+	"github.com/robinbobin/create-project/utils"
+)
+
 func Create() {
-	defer func() {
-		_ = recover()
-	}()
+	defer utils.RecoverFromPanic()
 
 	initPackage()
 }
