@@ -18,7 +18,7 @@ func AskOneWithMessage(message string, options []string) string {
 
 	err := survey.AskOne(prompt, &result)
 
-	VerifyOK(err)
+	PanicOnError(err)
 
 	return result
 }

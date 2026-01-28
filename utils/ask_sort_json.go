@@ -15,22 +15,22 @@ func AskSortJSON(name string) {
 
 	fileInfo, err := os.Stat(name)
 
-	VerifyOK(err)
+	PanicOnError(err)
 
 	fileData, err := os.ReadFile(name)
 
-	VerifyOK(err)
+	PanicOnError(err)
 
 	decoder := json.NewDecoder(strings.NewReader(string(fileData)))
 	decoder.UseNumber()
 
 	var jsonData any
 
-	VerifyOK(decoder.Decode(&jsonData))
+	PanicOnError(decoder.Decode(&jsonData))
 
 	sortedBytes, err := json.MarshalIndent(jsonData, "", strings.Repeat(" ", 2))
 
-	VerifyOK(err)
+	PanicOnError(err)
 
-	VerifyOK(os.WriteFile(name, sortedBytes, fileInfo.Mode()))
+	PanicOnError(os.WriteFile(name, sortedBytes, fileInfo.Mode()))
 }
