@@ -9,18 +9,22 @@ import (
 )
 
 func main() {
-	actions := []func(){npmpackage.Create}
+	actions := []func() bool{npmpackage.Create}
 
 	const optionExit = "Exit"
 	options := []string{"Create an npm package", "Create an Expo app", optionExit}
 
 	result := utils.AskOne(options)
 
+	farewell := "Bye."
+
 	if result != optionExit {
 		actionIndex := slices.Index(options, result)
 
-		actions[actionIndex]()
+		if actions[actionIndex]() {
+			farewell = "Done."
+		}
 	}
 
-	fmt.Println("Bye")
+	fmt.Println(farewell)
 }

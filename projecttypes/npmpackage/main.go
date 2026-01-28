@@ -4,8 +4,10 @@ import (
 	"github.com/robinbobin/create-project/utils"
 )
 
-func Create() {
+func Create() bool {
 	defer utils.RecoverFromPanic()
 
 	initPackage()
+
+	return true
 }
