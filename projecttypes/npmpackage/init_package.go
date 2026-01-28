@@ -15,5 +15,5 @@ func initPackage() {
 
 	utils.RunCmd("corepack", "use", "pnpm@latest")
 
-	utils.SortJSONFile("package.json")
+	utils.AskSortJSON("package.json")
 }

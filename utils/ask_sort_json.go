@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-func SortJSONFile(name string) {
+func AskSortJSON(name string) {
 	if !AskBool(fmt.Sprintf("Would you like to sort '%v'", filepath.Base(name))) {
 		return
 	}
