@@ -1,5 +1,13 @@
 package utils
 
+import "os/exec"
+
 func UsePNPM() {
-	RunCmd("corepack", "use", "pnpm@latest")
+	UsePNPMInDir("")
+}
+
+func UsePNPMInDir(dir string) {
+	RunCmdWithPreRunner("corepack use pnpm@latest", func(cmd *exec.Cmd) {
+		cmd.Dir = dir
+	})
 }

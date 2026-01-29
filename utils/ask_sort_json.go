@@ -9,15 +9,29 @@ import (
 )
 
 func AskSortJSON(name string) {
-	if !AskBool(fmt.Sprintf("Would you like to sort '%v'", filepath.Base(name))) {
+	AskSortJSONInDir(name, "")
+}
+
+func AskSortJSONInDir(name string, dir string) {
+	fmt.Println()
+
+	var jsonFile string
+
+	if len(dir) != 0 {
+		jsonFile = fmt.Sprintf("%v", filepath.Join(dir, name))
+	} else {
+		jsonFile = name
+	}
+
+	if !AskBool(fmt.Sprintf("Would you like to sort '%v'", jsonFile)) {
 		return
 	}
 
-	fileInfo, err := os.Stat(name)
+	fileInfo, err := os.Stat(jsonFile)
 
 	PanicOnError(err)
 
-	fileData, err := os.ReadFile(name)
+	fileData, err := os.ReadFile(jsonFile)
 
 	PanicOnError(err)
 
@@ -32,5 +46,5 @@ func AskSortJSON(name string) {
 
 	PanicOnError(err)
 
-	PanicOnError(os.WriteFile(name, sortedBytes, fileInfo.Mode()))
+	PanicOnError(os.WriteFile(jsonFile, sortedBytes, fileInfo.Mode()))
 }

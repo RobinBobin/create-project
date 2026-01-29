@@ -7,7 +7,7 @@ import (
 )
 
 func initPackage() {
-	utils.RunCmd("npm", "init")
+	utils.RunCmd("npm init")
 
 	_, err := os.Stat("package.json")
 

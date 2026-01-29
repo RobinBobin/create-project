@@ -7,8 +7,9 @@ import (
 func Create() bool {
 	defer utils.RecoverFromPanic()
 
-	initPackage()
-	// utils.AskSortJSON("app.json")
+	appName := createApp()
+
+	utils.AskSortJSONInDir("app.json", appName)
 
 	return true
 }
