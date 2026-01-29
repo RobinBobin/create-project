@@ -18,9 +18,8 @@ import (
 )
 
 type capturedOutput struct {
-	cancel  context.CancelFunc
-	context context.Context
-	// file *os.File
+	cancel                context.CancelFunc
+	context               context.Context
 	processCapturedOutput capturedOutputProcessor
 }
 
@@ -29,26 +28,15 @@ func (capturedOutput *capturedOutput) Write(p []byte) (n int, err error) {
 	needsMoreStdin := capturedOutput.processCapturedOutput(stripped)
 
 	if !needsMoreStdin {
-		fmt.Println("\t\t!!! cancelling !!!")
 		capturedOutput.cancel()
 	}
-
-	// _, err = fmt.Fprintf(capturedOutput.file, "stripped len: %v\n%v\n", len(stripped), stripped)
-
-	// isFound := strings.Contains(stripped, "What is your app named? …")
-
-	// if isFound {
-	// 	close(capturedOutput.done)
-	// }
-
-	// _, err = fmt.Fprintf(capturedOutput.file, "Found: %v\n", strconv.FormatBool(isFound))
 
 	return len(p), nil
 }
 
 type capturedOutputProcessor = func(strippedOutput string) (needsMoreStdin bool)
 
-func CaptureCmd(
+func CaptureCmdOutput(
 	cmdWithArgs string,
 	processCapturedOutput capturedOutputProcessor,
 ) {
@@ -64,12 +52,12 @@ func CaptureCmd(
 	switchToPrevious := switchToRaw()
 	defer switchToPrevious()
 
+	// Captured output
 	context, cancel := context.WithCancel(context.Background())
 
 	capturedOutput := &capturedOutput{
-		cancel:  cancel,
-		context: context,
-		// file: file,
+		cancel:                cancel,
+		context:               context,
 		processCapturedOutput: processCapturedOutput,
 	}
 
@@ -77,15 +65,9 @@ func CaptureCmd(
 	go copyStdinToPTerminal(capturedOutput, ptmx)
 
 	captureOutput(capturedOutput, ptmx)
-
-	fmt.Println("\t\t!!! hooray !!!")
 }
 
 func captureOutput(capturedOutput *capturedOutput, ptmx *os.File) {
-	file, err := os.OpenFile("helpme", os.O_APPEND|os.O_CREATE|os.O_RDWR, 0644)
-	PanicOnError(err)
-	defer file.Close()
-
 	multiWriter := io.MultiWriter(os.Stdout, capturedOutput)
 
 	_, _ = io.Copy(multiWriter, ptmx)
@@ -94,13 +76,13 @@ func captureOutput(capturedOutput *capturedOutput, ptmx *os.File) {
 func copyStdinToPTerminal(capturedOutput *capturedOutput, ptmx *os.File) {
 	defer RecoverFromPanic()
 
-	stdinfd := os.Stdin.Fd()
+	stdinfd := int(os.Stdin.Fd())
 
 OUTER:
 	for {
-		PanicOnError(unix.SetNonblock(int(stdinfd), true))
+		PanicOnError(unix.SetNonblock(stdinfd, true))
 		_, err := io.Copy(ptmx, os.Stdin)
-		PanicOnError(unix.SetNonblock(int(os.Stdin.Fd()), false))
+		PanicOnError(unix.SetNonblock(stdinfd, false))
 
 		if errors.Is(err, os.ErrClosed) {
 			break OUTER
@@ -113,12 +95,9 @@ OUTER:
 
 			default:
 				time.Sleep(10 * time.Millisecond)
-
 				continue
 			}
 		}
-
-		PanicOnError(err)
 	}
 }
 
@@ -129,10 +108,8 @@ func openPTerminal(cmd *exec.Cmd) (ptmx *os.File, closeptmx func()) {
 	closeptmx = func() {
 		err := ptmx.Close()
 
-		if err == nil {
-			fmt.Println("ptmx closed successfully.")
-		} else {
-			fmt.Println("ptmx failed to close:", err)
+		if err != nil {
+			fmt.Println("\rptmx failed to close:", err)
 		}
 	}
 
@@ -144,7 +121,7 @@ func openPTerminal(cmd *exec.Cmd) (ptmx *os.File, closeptmx func()) {
 		PanicOnError(err)
 	}
 
-	return
+	return ptmx, closeptmx
 }
 
 func switchToRaw() (switchToPrevious func()) {
@@ -156,9 +133,7 @@ func switchToRaw() (switchToPrevious func()) {
 	return func() {
 		err := term.Restore(stdinfd, oldTermState)
 
-		if err == nil {
-			fmt.Println("\rterminal restored")
-		} else {
+		if err != nil {
 			fmt.Println("\rterminal failed to be restored:", err)
 		}
 	}

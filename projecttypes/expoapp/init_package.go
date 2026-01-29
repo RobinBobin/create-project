@@ -7,10 +7,10 @@ import (
 )
 
 func initPackage() {
-	utils.CaptureCmd(
+	utils.CaptureCmdOutput(
 		"pnpm create expo-app --template",
 		func(strippedOutput string) (needsMoreStdin bool) {
-			return !strings.Contains(strippedOutput, "What is your app amed? …")
+			return !strings.Contains(strippedOutput, "What is your app named? …")
 		},
 	)
 
