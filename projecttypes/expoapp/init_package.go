@@ -1,9 +1,18 @@
 package expoapp
 
-import "github.com/robinbobin/create-project/utils"
+import (
+	"strings"
+
+	"github.com/robinbobin/create-project/utils"
+)
 
 func initPackage() {
-	utils.CaptureCmd("pnpm", "create", "expo-app", "--template")
+	utils.CaptureCmd(
+		"pnpm create expo-app --template",
+		func(strippedOutput string) (needsMoreStdin bool) {
+			return !strings.Contains(strippedOutput, "What is your app amed? …")
+		},
+	)
 
 	// utils.UsePNPM()
 
