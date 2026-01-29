@@ -4,12 +4,13 @@ import (
 	"fmt"
 	"slices"
 
+	"github.com/robinbobin/create-project/projecttypes/expoapp"
 	"github.com/robinbobin/create-project/projecttypes/npmpackage"
 	"github.com/robinbobin/create-project/utils"
 )
 
 func main() {
-	actions := []func() bool{npmpackage.Create}
+	actions := []func() bool{npmpackage.Create, expoapp.Create}
 
 	const optionExit = "Exit"
 	options := []string{"Create an npm package", "Create an Expo app", optionExit}

@@ -2,8 +2,11 @@ module github.com/robinbobin/create-project
 
 go 1.25.5
 
+require github.com/creack/pty v1.1.24
+
 require (
 	github.com/AlecAivazis/survey/v2 v2.3.7 // indirect
+	github.com/acarl005/stripansi v0.0.0-20180116102854-5a71ef0e047d
 	github.com/kballard/go-shellquote v0.0.0-20180428030007-95032a82bc51 // indirect
 	github.com/mattn/go-colorable v0.1.2 // indirect
 	github.com/mattn/go-isatty v0.0.8 // indirect
