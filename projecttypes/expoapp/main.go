@@ -1,6 +1,7 @@
 package expoapp
 
 import (
+	"fmt"
 	"os/exec"
 
 	"github.com/robinbobin/create-project/utils"
@@ -20,6 +21,9 @@ func Create() bool {
 	}
 
 	utils.UsePNPMInDir(appName)
+
+	fmt.Println()
+
 	utils.AskSortJSONInDir("app.json", appName)
 	utils.AskSortJSONInDir("package.json", appName)
 
