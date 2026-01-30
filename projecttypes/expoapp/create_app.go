@@ -2,7 +2,6 @@ package expoapp
 
 import (
 	"errors"
-	"fmt"
 	"os/exec"
 	"regexp"
 
@@ -38,14 +37,12 @@ func createApp() (appName string) {
 		utils.PanicOnError(errors.New("the app name could not be determined 🙁"))
 	}
 
-	preRunnder := func(cmd *exec.Cmd) {
+	preRunner := func(cmd *exec.Cmd) {
 		cmd.Dir = appName
 	}
 
 	if mustApproveBuilds {
-		fmt.Println()
-
-		utils.RunCmdWithPreRunner("pnpm approve-builds", preRunnder)
+		approveBuilds(preRunner)
 	}
 
 	utils.UsePNPMInDir(appName)
