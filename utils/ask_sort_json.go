@@ -13,8 +13,6 @@ func AskSortJSON(name string) {
 }
 
 func AskSortJSONInDir(name string, dir string) {
-	fmt.Println()
-
 	var jsonFile string
 
 	if len(dir) != 0 {

@@ -106,7 +106,6 @@ OUTER:
 		PanicOnError(unix.SetNonblock(stdinfd, false))
 
 		if errors.Is(err, os.ErrClosed) {
-			fmt.Println("\r\t\t!!! os.ErrClosed !!!")
 			break OUTER
 		}
 

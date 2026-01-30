@@ -10,4 +10,6 @@ func approveBuilds(preRunner utils.PreRunner) {
 	fmt.Println()
 
 	utils.RunCmdWithPreRunner("pnpm approve-builds", preRunner)
+
+	fmt.Println()
 }
