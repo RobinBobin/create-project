@@ -8,7 +8,7 @@ import (
 )
 
 func createApp() (appName string, mustApproveBuilds bool) {
-	appNameRe := regexp.MustCompile(`What is your app named\? … (\w+)`)
+	appNameRe := regexp.MustCompile(`What is your app named\? … (.*)`)
 
 	approveBuildsRe := regexp.MustCompile(`Run "pnpm approve-builds" to pick which dependencies should be allowed to run scripts\.`)
 
