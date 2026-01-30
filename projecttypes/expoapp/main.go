@@ -11,22 +11,19 @@ func Create() bool {
 
 	appName, mustApproveBuilds := createApp()
 
-	preRunner := func(cmd *exec.Cmd) {
+	setDir := func(cmd *exec.Cmd) {
 		cmd.Dir = appName
 	}
 
 	if mustApproveBuilds {
-		approveBuilds(preRunner)
+		approveBuilds(setDir)
 	}
 
 	utils.UsePNPMInDir(appName)
 	utils.AskSortJSONInDir("app.json", appName)
 	utils.AskSortJSONInDir("package.json", appName)
 
-	utils.RunCmdWithPreRunner(
-		"pnpm config --location project delete node-linker",
-		preRunner,
-	)
+	deleteNodeLinkerHoisted(setDir)
 
 	return true
 }
