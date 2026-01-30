@@ -17,35 +17,46 @@ import (
 	"golang.org/x/term"
 )
 
+type capturedOutputProcessor = func(strippedOutput string) (needsMoreStdin bool)
+
 type capturedOutput struct {
-	cancel                context.CancelFunc
-	context               context.Context
-	processCapturedOutput capturedOutputProcessor
+	cancel                  context.CancelFunc
+	context                 context.Context
+	capturedOutputProcessor capturedOutputProcessor
 }
 
 func (capturedOutput *capturedOutput) Write(p []byte) (n int, err error) {
+	n = len(p)
+	err = nil
+
+	if capturedOutput.capturedOutputProcessor == nil {
+		return
+	}
+
 	stripped := stripansi.Strip(string(p))
-	needsMoreStdin := capturedOutput.processCapturedOutput(stripped)
+	needsMoreStdin := capturedOutput.capturedOutputProcessor(stripped)
 
 	if !needsMoreStdin {
 		capturedOutput.cancel()
 	}
 
-	return len(p), nil
+	return
 }
 
-type capturedOutputProcessor = func(strippedOutput string) (needsMoreStdin bool)
+type CaptureCmdOutputOptions struct {
+	CapturedOutputProcessor capturedOutputProcessor
+	CmdWithArgs             string
+	PreRunner               PreRunner
+	Stdout                  io.Writer
+}
 
-func CaptureCmdOutput(
-	cmdWithArgs string,
-	processCapturedOutput capturedOutputProcessor,
-) {
+func CaptureCmdOutput(options *CaptureCmdOutputOptions) {
 	// The command
-	cmdArray := strings.Split(cmdWithArgs, " ")
+	cmdArray := strings.Split(options.CmdWithArgs, " ")
 	cmd := exec.Command(cmdArray[0], cmdArray[1:]...)
 
 	// ptmx
-	ptmx, closeptmx := openPTerminal(cmd)
+	ptmx, closeptmx := openPTerminal(cmd, options.PreRunner)
 	defer closeptmx()
 
 	// Switch terminal to raw input mode
@@ -56,19 +67,29 @@ func CaptureCmdOutput(
 	context, cancel := context.WithCancel(context.Background())
 
 	capturedOutput := &capturedOutput{
-		cancel:                cancel,
-		context:               context,
-		processCapturedOutput: processCapturedOutput,
+		cancel:                  cancel,
+		context:                 context,
+		capturedOutputProcessor: options.CapturedOutputProcessor,
 	}
 
 	// Start stdin -> ptmx goroutine
 	go copyStdinToPTerminal(capturedOutput, ptmx)
 
-	captureOutput(capturedOutput, ptmx)
+	stdout := options.Stdout
+
+	if stdout == nil {
+		stdout = os.Stdout
+	}
+
+	captureOutput(capturedOutput, ptmx, stdout)
 }
 
-func captureOutput(capturedOutput *capturedOutput, ptmx *os.File) {
-	multiWriter := io.MultiWriter(os.Stdout, capturedOutput)
+func captureOutput(
+	capturedOutput *capturedOutput,
+	ptmx *os.File,
+	stdout io.Writer,
+) {
+	multiWriter := io.MultiWriter(stdout, capturedOutput)
 
 	_, _ = io.Copy(multiWriter, ptmx)
 }
@@ -85,6 +106,7 @@ OUTER:
 		PanicOnError(unix.SetNonblock(stdinfd, false))
 
 		if errors.Is(err, os.ErrClosed) {
+			fmt.Println("\r\t\t!!! os.ErrClosed !!!")
 			break OUTER
 		}
 
@@ -101,7 +123,14 @@ OUTER:
 	}
 }
 
-func openPTerminal(cmd *exec.Cmd) (ptmx *os.File, closeptmx func()) {
+func openPTerminal(
+	cmd *exec.Cmd,
+	preRunner PreRunner,
+) (ptmx *os.File, closeptmx func()) {
+	if preRunner != nil {
+		preRunner(cmd)
+	}
+
 	ptmx, err := pty.Start(cmd)
 	PanicOnError(err)
 
