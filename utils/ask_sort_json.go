@@ -13,13 +13,7 @@ func AskSortJSON(name string) {
 }
 
 func AskSortJSONInDir(name string, dir string) {
-	var jsonFile string
-
-	if len(dir) != 0 {
-		jsonFile = fmt.Sprintf("%v", filepath.Join(dir, name))
-	} else {
-		jsonFile = name
-	}
+	jsonFile := filepath.Join(dir, name)
 
 	if !AskBool(fmt.Sprintf("Would you like to sort '%v'", jsonFile)) {
 		return
