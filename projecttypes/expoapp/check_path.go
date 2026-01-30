@@ -8,15 +8,16 @@ import (
 	"github.com/robinbobin/create-project/utils"
 )
 
-func checkPathIsCorrect(appName string) {
+func checkPathIsCorrect(appName string) (appPath string) {
 	wd, err := os.Getwd()
 	utils.PanicOnError(err)
+
+	src := filepath.Join(wd, appName)
+	appPath = src
 
 	if appName != filepath.Base(wd) {
 		return
 	}
-
-	src := filepath.Join(wd, appName)
 
 	fmt.Println()
 
@@ -41,4 +42,6 @@ func checkPathIsCorrect(appName string) {
 	}
 
 	os.Remove(src)
+
+	return dst
 }
