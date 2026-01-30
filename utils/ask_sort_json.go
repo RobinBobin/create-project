@@ -1,11 +1,8 @@
 package utils
 
 import (
-	"encoding/json"
 	"fmt"
-	"os"
 	"path/filepath"
-	"strings"
 )
 
 func AskSortJSON(name string) {
@@ -19,24 +16,5 @@ func AskSortJSONInDir(name string, dir string) {
 		return
 	}
 
-	fileInfo, err := os.Stat(jsonFile)
-
-	PanicOnError(err)
-
-	fileData, err := os.ReadFile(jsonFile)
-
-	PanicOnError(err)
-
-	decoder := json.NewDecoder(strings.NewReader(string(fileData)))
-	decoder.UseNumber()
-
-	var jsonData any
-
-	PanicOnError(decoder.Decode(&jsonData))
-
-	sortedBytes, err := json.MarshalIndent(jsonData, "", strings.Repeat(" ", 2))
-
-	PanicOnError(err)
-
-	PanicOnError(os.WriteFile(jsonFile, sortedBytes, fileInfo.Mode()))
+	WriteJSON(ReadJSON(jsonFile), jsonFile)
 }
