@@ -20,6 +20,7 @@ func Create() bool {
 	}
 
 	utils.UsePNPMInDir(appName)
+	utils.AskSortJSONInDir("app.json", appName)
 	utils.AskSortJSONInDir("package.json", appName)
 
 	utils.RunCmdWithPreRunner(
