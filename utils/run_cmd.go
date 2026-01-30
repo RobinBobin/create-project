@@ -10,9 +10,9 @@ func RunCmd(cmdWithArgs string) {
 	RunCmdWithPreRunner(cmdWithArgs, func(_ *exec.Cmd) {})
 }
 
-type preRunner = func(cmd *exec.Cmd)
+type PreRunner = func(cmd *exec.Cmd)
 
-func RunCmdWithPreRunner(cmdWithArgs string, preRunner preRunner) {
+func RunCmdWithPreRunner(cmdWithArgs string, preRunner PreRunner) {
 	cmdArray := strings.Split(cmdWithArgs, " ")
 	cmd := exec.Command(cmdArray[0], cmdArray[1:]...)
 
