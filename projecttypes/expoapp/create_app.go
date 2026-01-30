@@ -35,7 +35,7 @@ func createApp() (appName string) {
 	)
 
 	if len(appName) == 0 {
-		utils.PanicOnError(errors.New("The app name could not be determined 🙁"))
+		utils.PanicOnError(errors.New("the app name could not be determined 🙁"))
 	}
 
 	preRunnder := func(cmd *exec.Cmd) {
