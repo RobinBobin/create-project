@@ -7,7 +7,7 @@ import (
 )
 
 func RunCmd(cmdWithArgs string) {
-	RunCmdWithPreRunner(cmdWithArgs, func(_ *exec.Cmd) {})
+	RunCmdWithPreRunner(cmdWithArgs, nil)
 }
 
 type PreRunner = func(cmd *exec.Cmd)
@@ -20,7 +20,9 @@ func RunCmdWithPreRunner(cmdWithArgs string, preRunner PreRunner) {
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 
-	preRunner(cmd)
+	if preRunner != nil {
+		preRunner(cmd)
+	}
 
 	PanicOnError(cmd.Run())
 }
