@@ -28,7 +28,10 @@ func Create() bool {
 	utils.AskSortJSONInDir("package.json", appName)
 
 	deleteNodeLinkerHoisted(setDir)
-	checkPathIsCorrect(appName)
+
+	appPath := checkPathIsCorrect("my-app")
+
+	addMissingPlugins(appPath)
 
 	return true
 }
