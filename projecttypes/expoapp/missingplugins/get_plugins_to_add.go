@@ -1,35 +1,19 @@
-package expoapp
+package missingplugins
 
 import (
 	"fmt"
-	"path/filepath"
 	"slices"
 
 	"github.com/AlecAivazis/survey/v2"
-	"github.com/robinbobin/create-project/utils"
 )
 
-func addMissingPlugins(appPath string) {
-	jsonData := utils.ReadJSON(filepath.Join(appPath, "app.json"))
-
-	plugins := jsonData["expo"].(map[string]any)["plugins"].([]any)
-
+func getPluginsToAdd(plugins []any) []string {
 	currentPlugins := []string{}
 	missingPlugins := []string{}
 	pluginsToCheck := []string{"expo-font", "expo-system-ui"}
 
-	for _, raw := range plugins {
-		var pluginName string
-
-		switch plugin := raw.(type) {
-		case string:
-			pluginName = plugin
-
-		case []any:
-			pluginName = plugin[0].(string)
-		}
-
-		currentPlugins = append(currentPlugins, pluginName)
+	for _, rawPlugin := range plugins {
+		currentPlugins = append(currentPlugins, getPluginName(rawPlugin))
 	}
 
 	for _, pluginToCheck := range pluginsToCheck {
@@ -50,5 +34,5 @@ func addMissingPlugins(appPath string) {
 
 	survey.AskOne(prompt, &selectedPlugins)
 
-	fmt.Println(selectedPlugins)
+	return selectedPlugins
 }

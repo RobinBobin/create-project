@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os/exec"
 
+	"github.com/robinbobin/create-project/projecttypes/expoapp/missingplugins"
 	"github.com/robinbobin/create-project/utils"
 )
 
@@ -31,7 +32,7 @@ func Create() bool {
 
 	appPath := checkPathIsCorrect("my-app")
 
-	addMissingPlugins(appPath)
+	missingplugins.AddMissingPlugins(appPath)
 
 	return true
 }
