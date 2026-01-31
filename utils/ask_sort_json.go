@@ -16,8 +16,5 @@ func AskSortJSONInDir(name string, dir string) {
 		return
 	}
 
-	var jsonData any
-
-	ReadJSON(&jsonData, jsonFile)
-	WriteJSON(jsonData, jsonFile)
+	WriteJSON(ReadJSON(jsonFile), jsonFile)
 }

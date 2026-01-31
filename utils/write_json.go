@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-func WriteJSON(jsonData any, jsonFile string) {
+func WriteJSON(jsonData map[string]any, jsonFile string) {
 	fileInfo, err := os.Stat(jsonFile)
 	PanicOnError(err)
 

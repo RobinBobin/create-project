@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-func ReadJSON[T any](jsonData *T, jsonFile string) {
+func ReadJSON(jsonFile string) map[string]any {
 	fileData, err := os.ReadFile(jsonFile)
 
 	PanicOnError(err)
@@ -14,5 +14,9 @@ func ReadJSON[T any](jsonData *T, jsonFile string) {
 	decoder := json.NewDecoder(strings.NewReader(string(fileData)))
 	decoder.UseNumber()
 
+	jsonData := make(map[string]any)
+
 	PanicOnError(decoder.Decode(&jsonData))
+
+	return jsonData
 }

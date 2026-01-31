@@ -9,24 +9,16 @@ import (
 	"github.com/robinbobin/create-project/utils"
 )
 
-type expoAppConfig struct {
-	Expo appConfig `json:"expo"`
-}
-
-type appConfig struct {
-	Plugins []any `json:"plugins,omitempty"`
-}
-
 func addMissingPlugins(appPath string) {
-	jsonData := &expoAppConfig{}
+	jsonData := utils.ReadJSON(filepath.Join(appPath, "app.json"))
 
-	utils.ReadJSON(&jsonData, filepath.Join(appPath, "app.json"))
+	plugins := jsonData["expo"].(map[string]any)["plugins"].([]any)
 
 	currentPlugins := []string{}
 	missingPlugins := []string{}
-	pluginsToCheck := []string{"expo-font", "expo-router", "expo-system-ui"}
+	pluginsToCheck := []string{"expo-font", "expo-system-ui"}
 
-	for _, raw := range jsonData.Expo.Plugins {
+	for _, raw := range plugins {
 		var pluginName string
 
 		switch plugin := raw.(type) {
@@ -35,9 +27,6 @@ func addMissingPlugins(appPath string) {
 
 		case []any:
 			pluginName = plugin[0].(string)
-
-		default:
-			fmt.Printf("%T %v", plugin, plugin)
 		}
 
 		currentPlugins = append(currentPlugins, pluginName)
@@ -53,7 +42,7 @@ func addMissingPlugins(appPath string) {
 
 	prompt := &survey.MultiSelect{
 		Default: missingPlugins,
-		Message: "Would you like to add these missing plugins to 'app.json'",
+		Message: "Which missing plugins would you like to add to 'app.json'",
 		Options: missingPlugins,
 	}
 
