@@ -1,12 +1,18 @@
 package utils
 
-const (
-	no  = "No"
-	yes = "Yes"
+import (
+	"github.com/AlecAivazis/survey/v2"
 )
 
-var options = []string{yes, no}
-
 func AskBool(message string) bool {
-	return AskOneWithMessage(message, options) == yes
+	prompt := &survey.Confirm{
+		Default: true,
+		Message: message,
+	}
+
+	var response bool
+
+	PanicOnError(survey.AskOne(prompt, &response))
+
+	return response
 }
