@@ -3,7 +3,7 @@ package expoapp
 import (
 	"fmt"
 
-	"github.com/robinbobin/create-project/projecttypes/expoapp/missingplugins"
+	"github.com/robinbobin/create-project/projecttypes/expoapp/appjson"
 	"github.com/robinbobin/create-project/utils"
 )
 
@@ -22,12 +22,11 @@ func Create() bool {
 
 	fmt.Println()
 
-	utils.AskSortJSON("app.json")
 	utils.AskSortJSON("package.json")
 
 	deleteNodeLinkerHoisted()
 
-	missingplugins.AddMissingPlugins()
+	appjson.Lint()
 
 	return true
 }

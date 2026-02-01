@@ -9,12 +9,14 @@ import (
 )
 
 func getPluginsToAdd(plugins []any) []string {
+
 	currentPlugins := []string{}
 	missingPlugins := []string{}
+	pluginsToAdd := []string{}
 	pluginsToCheck := getPluginsToCheck()
 
 	if len(pluginsToCheck) == 0 {
-		return []string{}
+		return pluginsToAdd
 	}
 
 	for _, rawPlugin := range plugins {
@@ -27,6 +29,10 @@ func getPluginsToAdd(plugins []any) []string {
 		}
 	}
 
+	if len(missingPlugins) == 0 {
+		return pluginsToAdd
+	}
+
 	fmt.Println()
 
 	prompt := &survey.MultiSelect{
@@ -35,9 +41,7 @@ func getPluginsToAdd(plugins []any) []string {
 		Options: missingPlugins,
 	}
 
-	selectedPlugins := []string{}
+	utils.PanicOnError(survey.AskOne(prompt, &pluginsToAdd))
 
-	utils.PanicOnError(survey.AskOne(prompt, &selectedPlugins))
-
-	return selectedPlugins
+	return pluginsToAdd
 }
