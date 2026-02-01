@@ -48,5 +48,5 @@ func checkPathIsCorrect(appName string) {
 		))
 	}
 
-	os.Remove(src)
+	utils.PanicOnError(os.Remove(src))
 }

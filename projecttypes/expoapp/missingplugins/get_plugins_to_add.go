@@ -5,6 +5,7 @@ import (
 	"slices"
 
 	"github.com/AlecAivazis/survey/v2"
+	"github.com/robinbobin/create-project/utils"
 )
 
 func getPluginsToAdd(plugins []any) []string {
@@ -32,7 +33,7 @@ func getPluginsToAdd(plugins []any) []string {
 
 	selectedPlugins := []string{}
 
-	survey.AskOne(prompt, &selectedPlugins)
+	utils.PanicOnError(survey.AskOne(prompt, &selectedPlugins))
 
 	return selectedPlugins
 }
