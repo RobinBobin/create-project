@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 	"slices"
 
 	"github.com/robinbobin/create-project/projecttypes/expoapp"
@@ -22,9 +23,14 @@ func main() {
 	if result != optionExit {
 		actionIndex := slices.Index(options, result)
 
+		wd, err := os.Getwd()
+		utils.PanicOnError(err)
+
 		if actions[actionIndex]() {
 			farewell = "Done."
 		}
+
+		utils.PanicOnError(os.Chdir(wd))
 	}
 
 	fmt.Println(farewell)

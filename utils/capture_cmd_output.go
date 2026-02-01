@@ -46,7 +46,6 @@ func (capturedOutput *capturedOutput) Write(p []byte) (n int, err error) {
 type CaptureCmdOutputOptions struct {
 	CapturedOutputProcessor capturedOutputProcessor
 	CmdWithArgs             string
-	PreRunner               PreRunner
 	Stdout                  io.Writer
 }
 
@@ -56,7 +55,7 @@ func CaptureCmdOutput(options *CaptureCmdOutputOptions) {
 	cmd := exec.Command(cmdArray[0], cmdArray[1:]...)
 
 	// ptmx
-	ptmx, closeptmx := openPTerminal(cmd, options.PreRunner)
+	ptmx, closeptmx := openPTerminal(cmd)
 	defer closeptmx()
 
 	// Switch terminal to raw input mode
@@ -122,14 +121,7 @@ OUTER:
 	}
 }
 
-func openPTerminal(
-	cmd *exec.Cmd,
-	preRunner PreRunner,
-) (ptmx *os.File, closeptmx func()) {
-	if preRunner != nil {
-		preRunner(cmd)
-	}
-
+func openPTerminal(cmd *exec.Cmd) (ptmx *os.File, closeptmx func()) {
 	ptmx, err := pty.Start(cmd)
 	PanicOnError(err)
 

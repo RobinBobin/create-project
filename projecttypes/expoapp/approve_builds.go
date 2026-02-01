@@ -6,7 +6,7 @@ import (
 	"github.com/robinbobin/create-project/utils"
 )
 
-func approveBuilds(preRunner utils.PreRunner) {
+func approveBuilds() {
 	fmt.Println()
 
 	shouldApprove := utils.AskBool("There are ignored build scripts, run 'pnpm approve-builds'?")
@@ -17,7 +17,7 @@ func approveBuilds(preRunner utils.PreRunner) {
 		return
 	}
 
-	utils.RunCmdWithPreRunner("pnpm approve-builds", preRunner)
+	utils.RunCmd("pnpm approve-builds")
 
 	fmt.Println()
 }

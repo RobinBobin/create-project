@@ -1,18 +1,16 @@
 package expoapp
 
 import (
-	"os/exec"
 	"strings"
 
 	"github.com/robinbobin/create-project/utils"
 )
 
-func deleteNodeLinkerHoisted(preRunner utils.PreRunner) {
+func deleteNodeLinkerHoisted() {
 	nodeLinkerBuilder := &strings.Builder{}
 
 	utils.CaptureCmdOutput(&utils.CaptureCmdOutputOptions{
 		CmdWithArgs: "pnpm config --location project get node-linker",
-		PreRunner:   preRunner,
 		Stdout:      nodeLinkerBuilder,
 	})
 
@@ -26,12 +24,5 @@ func deleteNodeLinkerHoisted(preRunner utils.PreRunner) {
 		return
 	}
 
-	utils.RunCmdWithPreRunner(
-		"pnpm config --location project delete node-linker",
-		func(cmd *exec.Cmd) {
-			preRunner(cmd)
-
-			// cmd.Stdout = nil
-		},
-	)
+	utils.RunCmd("pnpm config --location project delete node-linker")
 }

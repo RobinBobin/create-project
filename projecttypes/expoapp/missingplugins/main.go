@@ -1,13 +1,11 @@
 package missingplugins
 
 import (
-	"path/filepath"
-
 	"github.com/robinbobin/create-project/utils"
 )
 
-func AddMissingPlugins(appPath string) {
-	jsonFile := filepath.Join(appPath, "app.json")
+func AddMissingPlugins() {
+	jsonFile := "app.json"
 	jsonData := utils.ReadJSON(jsonFile)
 
 	expo := jsonData["expo"].(map[string]any)

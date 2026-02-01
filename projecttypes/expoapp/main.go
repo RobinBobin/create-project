@@ -2,7 +2,6 @@ package expoapp
 
 import (
 	"fmt"
-	"os/exec"
 
 	"github.com/robinbobin/create-project/projecttypes/expoapp/missingplugins"
 	"github.com/robinbobin/create-project/utils"
@@ -13,26 +12,22 @@ func Create() bool {
 
 	appName, mustApproveBuilds := createApp()
 
-	setDir := func(cmd *exec.Cmd) {
-		cmd.Dir = appName
-	}
+	checkPathIsCorrect(appName)
 
 	if mustApproveBuilds {
-		approveBuilds(setDir)
+		approveBuilds()
 	}
 
-	utils.UsePNPMInDir(appName)
+	utils.UsePNPM()
 
 	fmt.Println()
 
-	utils.AskSortJSONInDir("app.json", appName)
-	utils.AskSortJSONInDir("package.json", appName)
+	utils.AskSortJSON("app.json")
+	utils.AskSortJSON("package.json")
 
-	deleteNodeLinkerHoisted(setDir)
+	deleteNodeLinkerHoisted()
 
-	appPath := checkPathIsCorrect(appName)
-
-	missingplugins.AddMissingPlugins(appPath)
+	missingplugins.AddMissingPlugins()
 
 	return true
 }

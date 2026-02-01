@@ -8,12 +8,19 @@ import (
 	"github.com/robinbobin/create-project/utils"
 )
 
-func checkPathIsCorrect(appName string) (appPath string) {
+func checkPathIsCorrect(appName string) {
 	wd, err := os.Getwd()
 	utils.PanicOnError(err)
 
 	src := filepath.Join(wd, appName)
-	appPath = src
+
+	shouldChdir := true
+
+	defer func() {
+		if shouldChdir {
+			utils.PanicOnError(os.Chdir(src))
+		}
+	}()
 
 	if appName != filepath.Base(wd) {
 		return
@@ -25,11 +32,11 @@ func checkPathIsCorrect(appName string) (appPath string) {
 		return
 	}
 
-	dst := filepath.Join(filepath.Dir(wd), appName)
-
-	if !utils.AskBool(fmt.Sprintf("Should it be: %v", dst)) {
+	if !utils.AskBool(fmt.Sprintf("Should it be: %v", wd)) {
 		return
 	}
+
+	shouldChdir = false
 
 	entries, err := os.ReadDir(src)
 	utils.PanicOnError(err)
@@ -37,11 +44,9 @@ func checkPathIsCorrect(appName string) (appPath string) {
 	for _, entry := range entries {
 		utils.PanicOnError(os.Rename(
 			filepath.Join(src, entry.Name()),
-			filepath.Join(dst, entry.Name()),
+			filepath.Join(wd, entry.Name()),
 		))
 	}
 
 	os.Remove(src)
-
-	return dst
 }
