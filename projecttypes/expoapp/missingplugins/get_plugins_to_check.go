@@ -11,6 +11,7 @@ import (
 func getPluginsToCheck() []string {
 	pluginsToCheck := []string{
 		"expo-font",
+		"expo-splash-screen",
 		"expo-system-ui",
 	}
 
