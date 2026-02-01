@@ -2,6 +2,7 @@ package expoapp
 
 import (
 	"fmt"
+	"os"
 	"strings"
 
 	"github.com/robinbobin/create-project/utils"
@@ -28,4 +29,7 @@ func deleteNodeLinkerHoisted() {
 	}
 
 	utils.RunCmd("pnpm config --location project delete node-linker")
+
+	utils.PanicOnError(os.RemoveAll("node_modules"))
+	utils.RunCmd("pnpm install")
 }

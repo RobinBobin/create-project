@@ -13,7 +13,14 @@ func getPluginsToAdd(plugins []any) []string {
 	currentPlugins := []string{}
 	missingPlugins := []string{}
 	pluginsToAdd := []string{}
-	pluginsToCheck := getPluginsToCheck()
+
+	pluginsToCheck := utils.FilterOutUninstalled(
+		[]string{
+			"expo-font",
+			"expo-splash-screen",
+			"expo-system-ui",
+		},
+	)
 
 	if len(pluginsToCheck) == 0 {
 		return pluginsToAdd
