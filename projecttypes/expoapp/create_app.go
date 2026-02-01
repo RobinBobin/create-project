@@ -13,7 +13,7 @@ func createApp() (appName string, mustApproveBuilds bool) {
 	approveBuildsRe := regexp.MustCompile(`Run "pnpm approve-builds" to pick which dependencies should be allowed to run scripts\.`)
 
 	utils.CaptureCmdOutput(&utils.CaptureCmdOutputOptions{
-		CmdWithArgs: "pnpm create expo-app --template",
+		CmdWithArgs: "pnpm create expo-app",
 		CapturedOutputProcessor: func(strippedOutput string) (needsMoreStdin bool) {
 			matches := appNameRe.FindStringSubmatch(strippedOutput)
 
