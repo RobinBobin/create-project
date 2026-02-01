@@ -11,7 +11,11 @@ import (
 func getPluginsToAdd(plugins []any) []string {
 	currentPlugins := []string{}
 	missingPlugins := []string{}
-	pluginsToCheck := []string{"expo-font", "expo-system-ui"}
+	pluginsToCheck := getPluginsToCheck()
+
+	if len(pluginsToCheck) == 0 {
+		return []string{}
+	}
 
 	for _, rawPlugin := range plugins {
 		currentPlugins = append(currentPlugins, getPluginName(rawPlugin))

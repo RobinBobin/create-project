@@ -9,7 +9,11 @@ func AddMissingPlugins() {
 	jsonData := utils.ReadJSON(jsonFile)
 
 	expo := jsonData["expo"].(map[string]any)
-	plugins := expo["plugins"].([]any)
+	plugins, _ := expo["plugins"].([]any)
+
+	if plugins == nil {
+		plugins = []any{}
+	}
 
 	pluginsToAdd := getPluginsToAdd(plugins)
 
