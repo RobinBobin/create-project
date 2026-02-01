@@ -30,7 +30,7 @@ func Create() bool {
 
 	deleteNodeLinkerHoisted(setDir)
 
-	appPath := checkPathIsCorrect("my-app")
+	appPath := checkPathIsCorrect(appName)
 
 	missingplugins.AddMissingPlugins(appPath)
 
