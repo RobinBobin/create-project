@@ -7,8 +7,6 @@ import (
 )
 
 func approveBuilds() {
-	fmt.Println()
-
 	shouldApprove := utils.AskBool("There are ignored build scripts, run 'pnpm approve-builds'?")
 
 	fmt.Println()

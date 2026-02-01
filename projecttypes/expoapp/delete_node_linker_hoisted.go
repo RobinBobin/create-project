@@ -1,6 +1,7 @@
 package expoapp
 
 import (
+	"fmt"
 	"strings"
 
 	"github.com/robinbobin/create-project/utils"
@@ -19,6 +20,8 @@ func deleteNodeLinkerHoisted() {
 	if nodeLinker != "hoisted" {
 		return
 	}
+
+	fmt.Println()
 
 	if !utils.AskBool("Would you like to remove 'nodeLinker: hoisted' from 'pnpm-workspace.yaml'?") {
 		return

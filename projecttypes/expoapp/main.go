@@ -1,9 +1,8 @@
 package expoapp
 
 import (
-	"fmt"
-
 	"github.com/robinbobin/create-project/projecttypes/expoapp/appjson"
+	"github.com/robinbobin/create-project/projecttypes/expoapp/packagejson"
 	"github.com/robinbobin/create-project/utils"
 )
 
@@ -20,12 +19,9 @@ func Create() bool {
 
 	utils.UsePNPM()
 
-	fmt.Println()
-
-	utils.AskSortJSON("package.json")
-
 	deleteNodeLinkerHoisted()
 
+	packagejson.Lint()
 	appjson.Lint()
 
 	return true
