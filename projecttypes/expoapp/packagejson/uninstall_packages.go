@@ -7,7 +7,7 @@ import (
 	"github.com/robinbobin/create-project/utils"
 )
 
-func deletePackages() {
+func uninstallPackages() {
 	packages := utils.FilterOutUninstalled(
 		[]string{
 			"expo-haptics",
