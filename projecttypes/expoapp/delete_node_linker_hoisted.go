@@ -1,10 +1,10 @@
 package expoapp
 
 import (
-	"fmt"
 	"os"
 	"strings"
 
+	"github.com/charmbracelet/huh"
 	"github.com/robinbobin/create-project/utils"
 )
 
@@ -22,14 +22,22 @@ func deleteNodeLinkerHoisted() {
 		return
 	}
 
-	fmt.Println()
+	shouldDelete := true
 
-	if !utils.AskBool("Would you like to remove 'nodeLinker: hoisted' from 'pnpm-workspace.yaml'?") {
+	utils.PanicOnError(
+		huh.NewConfirm().
+			Title("Would you like to delete 'nodeLinker: hoisted' from 'pnpm-workspace.yaml'?").
+			Value(&shouldDelete).
+			Run(),
+	)
+
+	if !shouldDelete {
 		return
 	}
 
 	utils.RunCmd("pnpm config --location project delete node-linker")
 
 	utils.PanicOnError(os.RemoveAll("node_modules"))
+
 	utils.RunCmd("pnpm install")
 }

@@ -5,6 +5,7 @@ import (
 	"os"
 	"path/filepath"
 
+	"github.com/charmbracelet/huh"
 	"github.com/robinbobin/create-project/utils"
 )
 
@@ -26,13 +27,29 @@ func checkPathIsCorrect(appName string) {
 		return
 	}
 
-	fmt.Println()
+	value := false
 
-	if utils.AskBool(fmt.Sprintf("Is it the desired path: %v", src)) {
+	utils.PanicOnError(
+		huh.NewConfirm().
+			Title(fmt.Sprintf("Is it the desired path: %v", src)).
+			Value(&value).
+			Run(),
+	)
+
+	if value {
 		return
 	}
 
-	if !utils.AskBool(fmt.Sprintf("Should it be: %v", wd)) {
+	value = true
+
+	utils.PanicOnError(
+		huh.NewConfirm().
+			Title(fmt.Sprintf("Should it be: %v", wd)).
+			Value(&value).
+			Run(),
+	)
+
+	if !value {
 		return
 	}
 

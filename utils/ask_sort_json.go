@@ -2,10 +2,21 @@ package utils
 
 import (
 	"fmt"
+
+	"github.com/charmbracelet/huh"
 )
 
 func AskSortJSON(name string) {
-	if !AskBool(fmt.Sprintf("Would you like to sort '%v'", name)) {
+	shouldSort := true
+
+	PanicOnError(
+		huh.NewConfirm().
+			Title(fmt.Sprintf("Would you like to sort '%v'", name)).
+			Value(&shouldSort).
+			Run(),
+	)
+
+	if !shouldSort {
 		return
 	}
 

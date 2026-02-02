@@ -1,10 +1,9 @@
 package missingplugins
 
 import (
-	"fmt"
 	"slices"
 
-	"github.com/AlecAivazis/survey/v2"
+	"github.com/charmbracelet/huh"
 	"github.com/robinbobin/create-project/utils"
 )
 
@@ -12,7 +11,6 @@ func getPluginsToAdd(plugins []any) []string {
 
 	currentPlugins := []string{}
 	missingPlugins := []string{}
-	pluginsToAdd := []string{}
 
 	pluginsToCheck := utils.FilterOutUninstalled(
 		[]string{
@@ -23,7 +21,7 @@ func getPluginsToAdd(plugins []any) []string {
 	)
 
 	if len(pluginsToCheck) == 0 {
-		return pluginsToAdd
+		return missingPlugins
 	}
 
 	for _, rawPlugin := range plugins {
@@ -37,18 +35,16 @@ func getPluginsToAdd(plugins []any) []string {
 	}
 
 	if len(missingPlugins) == 0 {
-		return pluginsToAdd
+		return missingPlugins
 	}
 
-	fmt.Println()
+	utils.PanicOnError(
+		huh.NewMultiSelect[string]().
+			Title("Which missing plugins would you like to add to 'app.json'?").
+			Options(huh.NewOptions(missingPlugins...)...).
+			Value(&missingPlugins).
+			Run(),
+	)
 
-	prompt := &survey.MultiSelect{
-		Default: missingPlugins,
-		Message: "Which missing plugins would you like to add to 'app.json'",
-		Options: missingPlugins,
-	}
-
-	utils.PanicOnError(survey.AskOne(prompt, &pluginsToAdd))
-
-	return pluginsToAdd
+	return missingPlugins
 }

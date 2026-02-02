@@ -3,30 +3,46 @@ package main
 import (
 	"fmt"
 	"os"
-	"slices"
 
+	"github.com/charmbracelet/huh"
 	"github.com/robinbobin/create-project/projecttypes/expoapp"
 	"github.com/robinbobin/create-project/projecttypes/npmpackage"
 	"github.com/robinbobin/create-project/utils"
 )
 
+type wrapper struct {
+	action func() bool
+	name   string
+}
+
+func (action *wrapper) String() string {
+	return action.name
+}
+
 func main() {
-	actions := []func() bool{npmpackage.Create, expoapp.Create}
+	actions := []*wrapper{
+		{action: npmpackage.Create, name: "Create an npm package"},
+		{action: expoapp.Create, name: "Create an Expo app"},
+		{name: "Exit"},
+	}
 
-	const optionExit = "Exit"
-	options := []string{"Create an npm package", "Create an Expo app", optionExit}
+	var action *wrapper
 
-	result := utils.AskOne(options)
+	utils.PanicOnError(
+		huh.NewSelect[*wrapper]().
+			Title("What would you like:").
+			Options(huh.NewOptions(actions...)...).
+			Value(&action).
+			Run(),
+	)
 
 	farewell := "Bye."
 
-	if result != optionExit {
-		actionIndex := slices.Index(options, result)
-
+	if action.action != nil {
 		wd, err := os.Getwd()
 		utils.PanicOnError(err)
 
-		if actions[actionIndex]() {
+		if action.action() {
 			farewell = "Done."
 		}
 

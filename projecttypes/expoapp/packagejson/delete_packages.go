@@ -3,7 +3,7 @@ package packagejson
 import (
 	"strings"
 
-	"github.com/AlecAivazis/survey/v2"
+	"github.com/charmbracelet/huh"
 	"github.com/robinbobin/create-project/utils"
 )
 
@@ -19,19 +19,17 @@ func deletePackages() {
 		return
 	}
 
-	prompt := survey.MultiSelect{
-		Default: packages,
-		Message: "Which of the following packages would you like to delete",
-		Options: packages,
-	}
+	utils.PanicOnError(
+		huh.NewMultiSelect[string]().
+			Title("Which of the following packages would you like to uninstall?").
+			Options(huh.NewOptions(packages...)...).
+			Value(&packages).
+			Run(),
+	)
 
-	selectedPackages := []string{}
-
-	utils.PanicOnError(survey.AskOne(&prompt, &selectedPackages))
-
-	if len(selectedPackages) == 0 {
+	if len(packages) == 0 {
 		return
 	}
 
-	utils.RunCmd("pnpm uninstall " + strings.Join(selectedPackages, " "))
+	utils.RunCmd("pnpm uninstall " + strings.Join(packages, " "))
 }

@@ -1,21 +1,23 @@
 package expoapp
 
 import (
-	"fmt"
-
+	"github.com/charmbracelet/huh"
 	"github.com/robinbobin/create-project/utils"
 )
 
 func approveBuilds() {
-	shouldApprove := utils.AskBool("There are ignored build scripts, run 'pnpm approve-builds'?")
+	shouldApprove := true
 
-	fmt.Println()
+	utils.PanicOnError(
+		huh.NewConfirm().
+			Title("There are ignored build scripts, run 'pnpm approve-builds'?").
+			Value(&shouldApprove).
+			Run(),
+	)
 
 	if !shouldApprove {
 		return
 	}
 
 	utils.RunCmd("pnpm approve-builds")
-
-	fmt.Println()
 }
