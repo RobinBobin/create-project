@@ -2,19 +2,12 @@ package utils
 
 import (
 	"fmt"
-	"path/filepath"
 )
 
 func AskSortJSON(name string) {
-	AskSortJSONInDir(name, "")
-}
-
-func AskSortJSONInDir(name string, dir string) {
-	jsonFile := filepath.Join(dir, name)
-
-	if !AskBool(fmt.Sprintf("Would you like to sort '%v'", jsonFile)) {
+	if !AskBool(fmt.Sprintf("Would you like to sort '%v'", name)) {
 		return
 	}
 
-	WriteJSON(ReadJSON(jsonFile), jsonFile)
+	WriteJSON(ReadJSON(name), name)
 }
