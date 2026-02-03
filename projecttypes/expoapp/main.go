@@ -11,7 +11,9 @@ func Create() bool {
 
 	appName, mustApproveBuilds := createApp()
 
-	checkPathIsCorrect(appName)
+	if !checkPathIsCorrect(appName) {
+		return false
+	}
 
 	if mustApproveBuilds {
 		approveBuilds()

@@ -1,6 +1,7 @@
 package expoapp
 
 import (
+	"errors"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -9,7 +10,15 @@ import (
 	"github.com/robinbobin/create-project/utils"
 )
 
-func checkPathIsCorrect(appName string) {
+func checkPathIsCorrect(appName string) bool {
+	_, err := os.Stat(appName)
+
+	if errors.Is(err, os.ErrNotExist) {
+		return false
+	}
+
+	utils.PanicOnError(err)
+
 	wd, err := os.Getwd()
 	utils.PanicOnError(err)
 
@@ -24,7 +33,7 @@ func checkPathIsCorrect(appName string) {
 	}()
 
 	if appName != filepath.Base(wd) {
-		return
+		return true
 	}
 
 	value := false
@@ -37,7 +46,7 @@ func checkPathIsCorrect(appName string) {
 	)
 
 	if value {
-		return
+		return true
 	}
 
 	value = true
@@ -50,7 +59,7 @@ func checkPathIsCorrect(appName string) {
 	)
 
 	if !value {
-		return
+		return true
 	}
 
 	shouldChdir = false
@@ -66,4 +75,6 @@ func checkPathIsCorrect(appName string) {
 	}
 
 	utils.PanicOnError(os.Remove(src))
+
+	return true
 }
