@@ -8,17 +8,17 @@ import (
 func Add() {
 	actions := []*utils.Action[func()]{
 		{
-			Fn:   addRobinBobinTSConfig,
-			Name: "@robinbobin/ts-config",
+			Fn:   useTypescript,
+			Name: "typescript",
 		},
-		{
-			Fn:   addRobinBobinESLintConfigRN,
-			Name: "@robinbobin/eslint-config-react-native",
-		},
-		{
-			Fn:   addRobinBobinPrettierConfig,
-			Name: "@robinbobin/prettier-config",
-		},
+		// {
+		// 	Fn:   addRobinBobinESLintConfigRN,
+		// 	Name: "@robinbobin/eslint-config-react-native",
+		// },
+		// {
+		// 	Fn:   addRobinBobinPrettierConfig,
+		// 	Name: "@robinbobin/prettier-config",
+		// },
 	}
 
 	utils.PanicOnError(
