@@ -12,7 +12,7 @@ func Create() bool {
 
 	utils.RunCmd("npm init")
 
-	_, err := os.Stat("package.json")
+	_, err := os.Stat(utils.PACKAGE_JSON)
 
 	if errors.Is(err, os.ErrNotExist) {
 		return false
@@ -20,7 +20,7 @@ func Create() bool {
 
 	utils.PanicOnError(err)
 	utils.UsePNPM()
-	utils.AskSortJSON("package.json")
+	utils.AskSortJSON(utils.PACKAGE_JSON)
 
 	return true
 }

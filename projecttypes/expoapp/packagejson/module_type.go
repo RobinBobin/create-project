@@ -1,23 +1,24 @@
 package packagejson
 
 import (
+	"fmt"
+
 	"github.com/robinbobin/create-project/utils"
 )
 
 func setModuleType() (shouldAdd bool) {
 	if !utils.Confirm(
-		"Would you like to add \"type\": \"module\" to package.json?",
+		fmt.Sprintf("Would you like to add \"type\": \"module\" to %v?", utils.PACKAGE_JSON),
 		true,
 	) {
 		return
 	}
 
-	fileName := "package.json"
-	json := utils.ReadJSON(fileName)
+	json := utils.ReadJSON(utils.PACKAGE_JSON)
 
 	json["type"] = "module"
 
-	utils.WriteJSON(json, fileName)
+	utils.WriteJSON(json, utils.PACKAGE_JSON)
 
 	return
 }
