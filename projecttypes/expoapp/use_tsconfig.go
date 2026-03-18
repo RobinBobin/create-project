@@ -1,4 +1,4 @@
-package packageaddition
+package expoapp
 
 import (
 	"fmt"
@@ -6,11 +6,25 @@ import (
 	"slices"
 	"strings"
 
+	"github.com/charmbracelet/huh"
 	"github.com/robinbobin/create-project/assets"
 	"github.com/robinbobin/create-project/utils"
 )
 
-func useTypescript() {
+func useTSConfig() {
+	shouldUse := true
+
+	utils.PanicOnError(
+		huh.NewConfirm().
+			Title("Would you like to use a custom tsconfig?").
+			Value(&shouldUse).
+			Run(),
+	)
+
+	if !shouldUse {
+		return
+	}
+
 	// Copy assets/tsconfig.json as a base config.
 	tsconfigName := "tsconfig.json"
 

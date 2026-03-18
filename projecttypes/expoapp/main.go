@@ -25,6 +25,7 @@ func Create() bool {
 	utils.UsePNPM()
 
 	deleteNodeLinkerHoisted()
+	useTSConfig()
 
 	packagejson.Lint()
 	appjson.Lint()
