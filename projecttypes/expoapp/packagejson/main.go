@@ -5,7 +5,9 @@ import (
 )
 
 func Lint() {
-	utils.AskSortJSON("package.json")
+	if !setModuleType() {
+		utils.AskSortJSON("package.json")
+	}
 
 	uninstallPackages()
 }
