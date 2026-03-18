@@ -7,10 +7,12 @@ import (
 )
 
 func setModuleType() (shouldAdd bool) {
-	if !utils.Confirm(
+	shouldAdd = utils.Confirm(
 		fmt.Sprintf("Would you like to add \"type\": \"module\" to %v?", utils.PACKAGE_JSON),
 		true,
-	) {
+	)
+
+	if !shouldAdd {
 		return
 	}
 
