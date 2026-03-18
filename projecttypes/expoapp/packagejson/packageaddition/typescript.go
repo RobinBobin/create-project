@@ -11,8 +11,6 @@ import (
 )
 
 func useTypescript() {
-	utils.RunCmd("pnpm i --save-dev typescript")
-
 	// Copy assets/tsconfig.json as a base config.
 	tsconfigName := "tsconfig.json"
 
@@ -44,7 +42,7 @@ func useTypescript() {
 		panic(fmt.Errorf("\"%v\": \"extends\" is of type \"%T\", equals \"%v\" and can't be parsed", tsconfigName, ext, ext))
 	}
 
-	extends = append(extends, "tsconfig.base")
+	extends = append(extends, "./tsconfig.base")
 
 	tsconfig["extends"] = extends
 
