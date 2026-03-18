@@ -4,7 +4,6 @@ import (
 	"os"
 	"strings"
 
-	"github.com/charmbracelet/huh"
 	"github.com/robinbobin/create-project/utils"
 )
 
@@ -22,16 +21,7 @@ func deleteNodeLinkerHoisted() {
 		return
 	}
 
-	shouldDelete := true
-
-	utils.PanicOnError(
-		huh.NewConfirm().
-			Title("Would you like to delete 'nodeLinker: hoisted' from 'pnpm-workspace.yaml'?").
-			Value(&shouldDelete).
-			Run(),
-	)
-
-	if !shouldDelete {
+	if !utils.Confirm("Would you like to delete 'nodeLinker: hoisted' from 'pnpm-workspace.yaml'?", true) {
 		return
 	}
 

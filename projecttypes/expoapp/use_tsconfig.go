@@ -6,22 +6,12 @@ import (
 	"slices"
 	"strings"
 
-	"github.com/charmbracelet/huh"
 	"github.com/robinbobin/create-project/assets"
 	"github.com/robinbobin/create-project/utils"
 )
 
 func useTSConfig() {
-	shouldUse := true
-
-	utils.PanicOnError(
-		huh.NewConfirm().
-			Title("Would you like to use a custom tsconfig?").
-			Value(&shouldUse).
-			Run(),
-	)
-
-	if !shouldUse {
+	if !utils.Confirm("Would you like to use a custom tsconfig?", true) {
 		return
 	}
 
