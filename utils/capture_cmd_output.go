@@ -81,6 +81,8 @@ func CaptureCmdOutput(options *CaptureCmdOutputOptions) {
 	}
 
 	captureOutput(capturedOutput, ptmx, stdout)
+
+	PanicOnError(cmd.Wait())
 }
 
 func captureOutput(
