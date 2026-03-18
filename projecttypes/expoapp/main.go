@@ -25,9 +25,11 @@ func Create() bool {
 	utils.UsePNPM()
 
 	deleteNodeLinkerHoisted()
-	useTSConfig()
 
-	packagejson.Lint()
+	options := packagejson.Lint()
+
+	useTSConfig(options.IsProjectReset)
+
 	appjson.Lint()
 
 	return true

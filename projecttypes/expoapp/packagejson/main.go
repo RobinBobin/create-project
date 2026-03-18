@@ -4,10 +4,19 @@ import (
 	"github.com/robinbobin/create-project/utils"
 )
 
-func Lint() {
-	if !setModuleType() {
+func Lint() *Options {
+	isTypeSet := setModuleType()
+
+	options := &Options{
+		IsProjectReset: resetProject(isTypeSet),
+		IsTypeSet:      isTypeSet,
+	}
+
+	if !options.IsTypeSet {
 		utils.AskSortJSON(utils.PACKAGE_JSON)
 	}
 
 	uninstallPackages()
+
+	return options
 }

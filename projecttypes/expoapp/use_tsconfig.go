@@ -10,7 +10,7 @@ import (
 	"github.com/robinbobin/create-project/utils"
 )
 
-func useTSConfig() {
+func useTSConfig(isProjectReset bool) {
 	if !utils.Confirm("Would you like to use a custom tsconfig?", true) {
 		return
 	}
@@ -27,8 +27,10 @@ func useTSConfig() {
 	// Read the current tsconfig.
 	tsconfig := utils.ReadJSON(tsconfigName)
 
-	// Delete `compilerOptions`.
-	delete(tsconfig, "compilerOptions")
+	// Delete `compilerOptions` if the project was reset.
+	if isProjectReset {
+		delete(tsconfig, "compilerOptions")
+	}
 
 	// Modify `extends`.
 	extends := []string{}
@@ -57,7 +59,7 @@ func useTSConfig() {
 	for index := range include {
 		pattern := rawInclude[index].(string)
 
-		if strings.HasPrefix(pattern, "**") {
+		if isProjectReset && strings.HasPrefix(pattern, "**") {
 			pattern = fmt.Sprint("src/", pattern)
 		}
 
