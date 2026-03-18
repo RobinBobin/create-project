@@ -14,9 +14,9 @@ func useTypescript() {
 	utils.RunCmd("pnpm i --save-dev typescript")
 
 	// Copy assets/tsconfig.json as a base config.
-	assets.CopyTSConfig()
-
 	tsconfigName := "tsconfig.json"
+
+	assets.CopyFile("tsconfig.base.json", tsconfigName)
 
 	// Backup the current tsconfig.
 	tsconfigFile, err := os.Open(tsconfigName)
