@@ -29,7 +29,7 @@ func Create() bool {
 
 	options := packagejson.Lint()
 
-	tsconfig.UseTSConfig(options.IsProjectReset)
+	tsconfig.ProcessTSConfig(options.IsProjectReset)
 
 	appjson.Lint()
 
