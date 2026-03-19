@@ -6,11 +6,12 @@ import (
 
 const tsconfig_json = "tsconfig.json"
 
-func Process(isProjectReset bool) {
+func Process(customDTS string, isProjectReset bool) {
 	tsconfig := utils.ReadJSON(tsconfig_json)
 
 	deleteCompilerOptions(isProjectReset, tsconfig)
 	processExtends(tsconfig)
+	addToFiles(customDTS, tsconfig)
 	addToFiles("eslint.config.js", tsconfig)
 	processInclude(isProjectReset, tsconfig)
 

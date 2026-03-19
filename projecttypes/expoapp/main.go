@@ -28,10 +28,13 @@ func Create() bool {
 
 	deleteNodeLinkerHoisted()
 
-	options := packagejson.Lint()
+	packageJsonOptions := packagejson.Lint()
+	eslintConfigOptions := eslintconfig.Process(packageJsonOptions.IsTypeSet)
 
-	eslintconfig.Process(options.IsTypeSet)
-	tsconfig.Process(options.IsProjectReset)
+	tsconfig.Process(
+		eslintConfigOptions.CustomDTS,
+		packageJsonOptions.IsProjectReset,
+	)
 
 	appjson.Lint()
 

@@ -5,11 +5,10 @@ import (
 	"os"
 
 	"github.com/charmbracelet/huh"
-	"github.com/robinbobin/create-project/projecttypes/expoapp/tsconfig"
 	"github.com/robinbobin/create-project/utils"
 )
 
-func handleMissingTypes() {
+func handleMissingTypes() string {
 	dummyTypings := []string{
 		"eslint-config-expo/flat",
 	}
@@ -23,7 +22,7 @@ func handleMissingTypes() {
 	)
 
 	if len(dummyTypings) == 0 {
-		return
+		return ""
 	}
 
 	const fileName = "custom.d.ts"
@@ -42,5 +41,5 @@ func handleMissingTypes() {
 		utils.PanicOnError(err)
 	}
 
-	tsconfig.AddToFiles(fileName)
+	return fileName
 }

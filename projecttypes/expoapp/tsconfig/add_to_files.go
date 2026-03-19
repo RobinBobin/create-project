@@ -1,11 +1,46 @@
 package tsconfig
 
-import "github.com/robinbobin/create-project/utils"
+import (
+	"fmt"
+	"slices"
+)
 
-func AddToFiles(fileName string) {
-	tsconfig := utils.ReadJSON(tsconfig_json)
+func addToFiles(fileName string, tsconfig map[string]any) {
+	if len(fileName) == 0 {
+		return
+	}
 
-	addToFiles(fileName, tsconfig)
+	const key = "files"
 
-	utils.WriteJSON(tsconfig, tsconfig_json)
+	var files []string
+
+	switch rawFiles := tsconfig[key].(type) {
+	case []any:
+		files = make([]string, len(rawFiles))
+
+		for index := range files {
+			files[index] = rawFiles[index].(string)
+		}
+
+	case []string:
+		files = rawFiles
+
+	case nil:
+		// Nothing to do.
+
+	default:
+		panic(fmt.Errorf("\"%v\": \"%v\" is of type \"%T\", equals \"%v\" and can't be parsed", tsconfig_json, key, rawFiles, rawFiles))
+	}
+
+	if files == nil {
+		tsconfig[key] = []string{fileName}
+	} else {
+		if !slices.Contains(files, fileName) {
+			files = append(files, fileName)
+		}
+
+		slices.Sort(files)
+
+		tsconfig[key] = files
+	}
 }
