@@ -2,7 +2,6 @@ package tsconfig
 
 import (
 	"fmt"
-	"slices"
 )
 
 func processExtends(tsconfig map[string]any) {
@@ -22,8 +21,6 @@ func processExtends(tsconfig map[string]any) {
 	}
 
 	extends = append(extends, "./tsconfig.base")
-
-	slices.Sort(extends)
 
 	tsconfig["extends"] = extends
 }
