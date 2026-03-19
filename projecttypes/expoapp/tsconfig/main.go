@@ -7,7 +7,7 @@ import (
 
 const tsconfig_json = "tsconfig.json"
 
-func ProcessTSConfig(isProjectReset bool) {
+func Process(isProjectReset bool) {
 	if !utils.Confirm("Would you like to use a custom tsconfig?", true) {
 		return
 	}
