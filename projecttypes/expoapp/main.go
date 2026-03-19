@@ -3,6 +3,7 @@ package expoapp
 import (
 	"github.com/robinbobin/create-project/assets"
 	"github.com/robinbobin/create-project/projecttypes/expoapp/appjson"
+	"github.com/robinbobin/create-project/projecttypes/expoapp/eslintconfig"
 	"github.com/robinbobin/create-project/projecttypes/expoapp/packagejson"
 	"github.com/robinbobin/create-project/projecttypes/expoapp/tsconfig"
 	"github.com/robinbobin/create-project/utils"
@@ -29,6 +30,7 @@ func Create() bool {
 
 	options := packagejson.Lint()
 
+	eslintconfig.Process(options.IsTypeSet)
 	tsconfig.Process(options.IsProjectReset)
 
 	appjson.Lint()

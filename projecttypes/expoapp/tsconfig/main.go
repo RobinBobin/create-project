@@ -20,7 +20,7 @@ func Process(isProjectReset bool) {
 
 	deleteCompilerOptions(isProjectReset, tsconfig)
 	processExtends(tsconfig)
-	processFiles(tsconfig)
+	addToFiles("eslint.config.js", tsconfig)
 	processInclude(isProjectReset, tsconfig)
 
 	utils.WriteJSON(tsconfig, tsconfig_json)
