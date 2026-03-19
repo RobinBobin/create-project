@@ -7,13 +7,15 @@ import (
 	"github.com/robinbobin/create-project/utils"
 )
 
-func uninstallPackages() {
-	packages := utils.FilterOutUninstalled(
-		[]string{
-			"expo-haptics",
-			"expo-symbols",
-		},
-	)
+func uninstallPackages(isProjectReset bool) {
+	packages := []string{}
+
+	if isProjectReset {
+		packages = append(packages, "expo-haptics",
+			"expo-symbols")
+	}
+
+	packages = utils.FilterOutUninstalled(packages)
 
 	if len(packages) == 0 {
 		return

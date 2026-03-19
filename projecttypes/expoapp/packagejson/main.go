@@ -16,7 +16,7 @@ func Lint() *Options {
 		utils.AskSortJSON(utils.PACKAGE_JSON)
 	}
 
-	uninstallPackages()
+	uninstallPackages(options.IsProjectReset)
 
 	return options
 }
