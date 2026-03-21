@@ -5,5 +5,7 @@ func Process(isTypeSet bool) *Options {
 		CustomDTS: handleMissingTypes(),
 	}
 
+	useBaseConfigs()
+
 	return options
 }
