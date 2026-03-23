@@ -18,6 +18,10 @@ export const namingConvention = [
     prefix: [
       'are',
       'ARE_',
+      'do',
+      'DO_',
+      'does',
+      'DOES_',
       'is',
       'IS_',
       'should',
