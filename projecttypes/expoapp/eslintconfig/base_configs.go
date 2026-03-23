@@ -30,7 +30,7 @@ func (config config) String() string {
 	return strings.Join(parts, " ")
 }
 
-func UseBaseConfigs() {
+func useBaseConfigs() {
 	const eslint = "eslint"
 
 	// Get the file list from `assets/eslint`
