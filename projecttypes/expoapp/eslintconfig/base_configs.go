@@ -1,42 +1,60 @@
 package eslintconfig
 
 import (
+	"errors"
 	"fmt"
-	"slices"
+	"os"
+	"path/filepath"
+	"regexp"
 	"strings"
 
 	"github.com/charmbracelet/huh"
+	"github.com/robinbobin/create-project/assets"
 	"github.com/robinbobin/create-project/utils"
 )
 
 type config struct {
-	dependencies []string
-	filePostfix  string
+	fileName string
 }
 
-func useBaseConfigs() {
-	generalConfig := "General config"
-	reactConfig := "React config"
-	reactNativeConfig := "React Native config"
+func (config config) String() string {
+	parts := strings.Split(
+		strings.TrimSuffix(config.fileName, ".js"),
+		".",
+	)
 
-	configs := []string{
-		generalConfig,
-		reactConfig,
-		reactNativeConfig,
+	for index := range parts {
+		parts[index] = strings.ToUpper(parts[index][:1]) + parts[index][1:]
+	}
+
+	return strings.Join(parts, " ")
+}
+
+func UseBaseConfigs() {
+	const eslint = "eslint"
+
+	// Get the file list from `assets/eslint`
+	entries, err := assets.ReadDir(eslint)
+
+	utils.PanicOnError(err)
+
+	configs := []config{}
+
+	for _, entry := range entries {
+		if entry.IsDir() {
+			continue
+		}
+
+		configs = append(configs, config{
+			fileName: entry.Name(),
+		})
 	}
 
 	utils.PanicOnError(
-		huh.NewMultiSelect[string]().
-			Title("Would you like to add a custom base eslint config?").
+		huh.NewMultiSelect[config]().
+			Title("Would you like to add any of these custom ESLint configs?").
 			Options(huh.NewOptions(configs...)...).
 			Value(&configs).
-			Validate(func(selection []string) error {
-				if len(selection) == 0 || slices.Contains(selection, generalConfig) {
-					return nil
-				}
-
-				return fmt.Errorf("The general config is required.")
-			}).
 			Run(),
 	)
 
@@ -44,49 +62,60 @@ func useBaseConfigs() {
 		return
 	}
 
-	data := map[string]config{
-		generalConfig: {
-			dependencies: []string{
-				"@eslint/js",
-				"@stylistic/eslint-plugin",
-				"@typescript-eslint/parser",
-				"eslint-import-resolver-typescript",
-				"eslint-plugin-import-x",
-				"eslint-plugin-promise",
-				"eslint-plugin-simple-import-sort",
-				"typescript-eslint",
-			},
-		},
-		reactConfig: {
-			dependencies: []string{
-				"eslint-plugin-react-hooks",
-			},
-			filePostfix: "react",
-		},
-		reactNativeConfig: {
-			filePostfix: "react.native",
-		},
-	}
+	utils.PanicOnError(os.Mkdir(eslint, 0775))
 
-	sb := strings.Builder{}
+	re := regexp.MustCompile(`(?s)import\s+.*?\s+from\s+['"]([^'"]+)['"]`)
 
 	for _, config := range configs {
-		sb.Reset()
-		sb.WriteString("eslint.config")
+		fileName := filepath.Join(eslint, config.fileName)
 
-		datum := data[config]
+		// Copy the file
+		assets.CopyFile(fileName, fileName)
 
-		if len(datum.filePostfix) != 0 {
-			sb.WriteString(".")
-			sb.WriteString(datum.filePostfix)
+		// Read the file to get the imports
+		rawData, err := os.ReadFile(fileName)
+
+		utils.PanicOnError(err)
+
+		data := string(rawData)
+
+		// Get package names from imports
+		matches := re.FindAllStringSubmatch(data, -1)
+		packages := []string{}
+
+		for _, match := range matches {
+			parts := strings.Split(match[1], "/")
+
+			if strings.HasPrefix(parts[0], ".") {
+				// Relative import
+				dir := filepath.Join(eslint, parts[1])
+				err := assets.CopyFS(dir, dir)
+
+				if !errors.Is(err, os.ErrExist) {
+					utils.PanicOnError(err)
+				}
+
+				continue
+			}
+
+			var packageName string
+
+			if strings.HasPrefix(parts[0], "@") && len(parts) >= 2 {
+				// Scoped package
+				packageName = strings.Join(parts[:2], "/")
+			} else {
+				// Unscoped package
+				packageName = parts[0]
+			}
+
+			packages = append(packages, packageName)
 		}
 
-		sb.WriteString(".js")
-
-		fileName := sb.String()
-
-		fmt.Println(fileName, datum.dependencies)
-
-		// assets.CopyFile(fileName, fileName)
+		utils.RunCmd(
+			fmt.Sprint(
+				"pnpm install --save-dev ",
+				strings.Join(packages, " "),
+			),
+		)
 	}
 }
