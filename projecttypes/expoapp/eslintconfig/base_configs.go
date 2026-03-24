@@ -23,8 +23,8 @@ func (config config) String() string {
 		".",
 	)
 
-	for index := range parts {
-		parts[index] = strings.ToUpper(parts[index][:1]) + parts[index][1:]
+	for index, part := range parts {
+		parts[index] = strings.ToUpper(part[:1]) + part[1:]
 	}
 
 	return strings.Join(parts, " ")
@@ -67,6 +67,30 @@ func useBaseConfigs(options *Options) {
 	utils.PanicOnError(os.Mkdir(eslint, 0775))
 
 	re := regexp.MustCompile(`(?s)import\s+.*?\s+from\s+['"]([^'"]+)['"]`)
+
+	// Read eslint.config.js and prepare the content for addition
+	rawContent, err := os.ReadFile(eslintConfigJS)
+
+	utils.PanicOnError(err)
+
+	content := string(rawContent)
+
+	const separator = "\n"
+	separatorIndex := strings.LastIndex(content, separator)
+	separatorIndex = strings.LastIndex(content[:separatorIndex], separator)
+
+	content = content[:separatorIndex+1]
+
+	// Overwrite eslint.config.js
+	file, err := os.Create(eslintConfigJS)
+
+	utils.PanicOnError(err)
+
+	defer func() {
+		_ = file.Close()
+	}()
+
+	var importNames []string
 
 	for _, config := range configs {
 		fileName := filepath.Join(eslint, config.fileName)
@@ -119,5 +143,39 @@ func useBaseConfigs(options *Options) {
 				strings.Join(packages, " "),
 			),
 		)
+
+		// Add require
+		parts := strings.Split(
+			strings.TrimSuffix(config.fileName, ".js"),
+			".",
+		)
+
+		if len(parts) > 1 {
+			for index, part := range parts[1:] {
+				parts[index] = strings.ToUpper(part[:1]) + part[1:]
+			}
+		}
+
+		importName := fmt.Sprint(strings.Join(parts, ""), "Config")
+
+		importNames = append(importNames, importName)
+
+		_, err = fmt.Fprintf(file, "const %v = require('./%v')\n", importName, fileName)
+
+		utils.PanicOnError(err)
 	}
+
+	_, err = file.WriteString(content)
+
+	utils.PanicOnError(err)
+
+	for _, importName := range importNames {
+		_, err := fmt.Fprintf(file, "  %v,\n", importName)
+
+		utils.PanicOnError(err)
+	}
+
+	_, err = file.WriteString("]);\n")
+
+	utils.PanicOnError(err)
 }
