@@ -44,5 +44,11 @@ func resetProject(isTypeSet bool) bool {
 
 	utils.RunCmd(fmt.Sprint("pnpm", " ", key))
 
+	const app = "app"
+	const src = "src"
+
+	utils.PanicOnError(os.Mkdir(src, 0775))
+	utils.PanicOnError(os.Rename(app, filepath.Join(src, app)))
+
 	return true
 }
