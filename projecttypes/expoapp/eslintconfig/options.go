@@ -1,5 +1,6 @@
 package eslintconfig
 
 type Options struct {
-	CustomDTS string
+	Files   []string
+	Include []string
 }

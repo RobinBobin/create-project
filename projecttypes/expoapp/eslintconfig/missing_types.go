@@ -8,7 +8,7 @@ import (
 	"github.com/robinbobin/create-project/utils"
 )
 
-func handleMissingTypes() string {
+func handleMissingTypes(options *Options) {
 	dummyTypings := []string{
 		"eslint-config-expo/flat",
 	}
@@ -22,7 +22,7 @@ func handleMissingTypes() string {
 	)
 
 	if len(dummyTypings) == 0 {
-		return ""
+		return
 	}
 
 	const fileName = "custom.d.ts"
@@ -41,5 +41,5 @@ func handleMissingTypes() string {
 		utils.PanicOnError(err)
 	}
 
-	return fileName
+	options.Files = append(options.Files, fileName)
 }

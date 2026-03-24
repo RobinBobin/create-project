@@ -30,7 +30,7 @@ func (config config) String() string {
 	return strings.Join(parts, " ")
 }
 
-func useBaseConfigs() {
+func useBaseConfigs(options *Options) {
 	const eslint = "eslint"
 
 	// Get the file list from `assets/eslint`
@@ -61,6 +61,8 @@ func useBaseConfigs() {
 	if len(configs) == 0 {
 		return
 	}
+
+	options.Include = append(options.Include, fmt.Sprintf("%v/**/*.js", eslint))
 
 	utils.PanicOnError(os.Mkdir(eslint, 0775))
 

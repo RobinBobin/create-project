@@ -1,11 +1,12 @@
 package eslintconfig
 
-func Process(isTypeSet bool) *Options {
-	options := &Options{
-		CustomDTS: handleMissingTypes(),
-	}
+import "github.com/robinbobin/create-project/projecttypes/expoapp/packagejson"
 
-	useBaseConfigs()
+func Process(packageJsonOptions *packagejson.Options) *Options {
+	options := &Options{Files: []string{"eslint.config.js"}}
+
+	handleMissingTypes(options)
+	useBaseConfigs(options)
 
 	return options
 }
