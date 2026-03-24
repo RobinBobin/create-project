@@ -5,14 +5,12 @@ import (
 )
 
 func Lint() *Options {
-	isTypeSet := setModuleType()
+	options := &Options{}
 
-	options := &Options{
-		IsProjectReset: resetProject(isTypeSet),
-		IsTypeSet:      isTypeSet,
-	}
+	setType(options)
+	resetProject(options)
 
-	if !options.IsTypeSet {
+	if !options.IsModule {
 		utils.AskSortJSON(utils.PACKAGE_JSON)
 	}
 

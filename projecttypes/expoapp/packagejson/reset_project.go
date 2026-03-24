@@ -9,14 +9,16 @@ import (
 	"github.com/robinbobin/create-project/utils"
 )
 
-func resetProject(isTypeSet bool) bool {
+func resetProject(options *Options) {
 	if !utils.Confirm("Would you like to run `reset-project`?", true) {
-		return false
+		return
 	}
+
+	options.IsProjectReset = true
 
 	key := "reset-project"
 
-	if isTypeSet {
+	if options.IsModule {
 		cjs := ".cjs"
 		js := ".js"
 		scripts := "scripts"
@@ -49,6 +51,4 @@ func resetProject(isTypeSet bool) bool {
 
 	utils.PanicOnError(os.Mkdir(src, 0775))
 	utils.PanicOnError(os.Rename(app, filepath.Join(src, app)))
-
-	return true
 }
