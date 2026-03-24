@@ -9,6 +9,7 @@ func Process(packageJsonOptions *packagejson.Options) *Options {
 
 	handleMissingTypes(options)
 	useBaseConfigs(options)
+	replaceRequire(packageJsonOptions.IsModule)
 
 	return options
 }
