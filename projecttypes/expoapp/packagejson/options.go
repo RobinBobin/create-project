@@ -1,6 +1,6 @@
 package packagejson
 
 type Options struct {
-	IsModule       bool
+	IsESM          bool
 	IsProjectReset bool
 }

@@ -8,13 +8,13 @@ import (
 
 func setType(options *Options) {
 	if !utils.Confirm(
-		fmt.Sprintf("Would you like to add \"type\": \"module\" to %v?", utils.PACKAGE_JSON),
+		fmt.Sprintf("Would you like to add \"type\": \"module\" to your %v?", utils.PACKAGE_JSON),
 		true,
 	) {
 		return
 	}
 
-	options.IsModule = true
+	options.IsESM = true
 
 	json := utils.ReadJSON(utils.PACKAGE_JSON)
 

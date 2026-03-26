@@ -18,7 +18,7 @@ func resetProject(options *Options) {
 
 	key := "reset-project"
 
-	if options.IsModule {
+	if options.IsESM {
 		cjs := ".cjs"
 		js := ".js"
 		scripts := "scripts"

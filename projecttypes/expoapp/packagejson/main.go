@@ -10,7 +10,7 @@ func Lint() *Options {
 	setType(options)
 	resetProject(options)
 
-	if !options.IsModule {
+	if !options.IsESM {
 		utils.AskSortJSON(utils.PACKAGE_JSON)
 	}
 

@@ -8,9 +8,15 @@ import (
 	"github.com/robinbobin/create-project/utils"
 )
 
-func handleMissingTypes(options *Options) {
+func handleMissingTypes(IsESM bool, options *Options) {
+	extension := ""
+
+	if IsESM {
+		extension = ".js"
+	}
+
 	dummyTypings := []string{
-		"eslint-config-expo/flat",
+		fmt.Sprint("eslint-config-expo/flat", extension),
 	}
 
 	utils.PanicOnError(

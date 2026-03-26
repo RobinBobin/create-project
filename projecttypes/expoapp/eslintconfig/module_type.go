@@ -3,12 +3,13 @@ package eslintconfig
 import (
 	"os"
 	"regexp"
+	"strings"
 
 	"github.com/robinbobin/create-project/utils"
 )
 
-func replaceRequire(isModule bool) {
-	if !isModule {
+func handleModuleType(IsESM bool) {
+	if !IsESM {
 		return
 	}
 
@@ -27,11 +28,18 @@ func replaceRequire(isModule bool) {
 	// $1 = naming/destructuring, $2 = package path
 	reImports := regexp.MustCompile(`const\s+([\w\s{},]+)\s+=\s+require\((?:'|")(.+?)(?:'|")\);?`)
 
-	reExport := regexp.MustCompile(`(module.exports\s+=\s+)`)
+	reExport := regexp.MustCompile(`module.exports\s+=\s+`)
 
 	content := string(rawContent)
 	content = reImports.ReplaceAllString(content, "import $1 from \"$2\";")
 	content = reExport.ReplaceAllString(content, "export default ")
+
+	content = strings.Replace(
+		content,
+		"eslint-config-expo/flat",
+		"eslint-config-expo/flat.js",
+		1,
+	)
 
 	_, err = file.WriteString(content)
 

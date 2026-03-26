@@ -7,9 +7,9 @@ const eslintConfigJS = "eslint.config.js"
 func Process(packageJsonOptions *packagejson.Options) *Options {
 	options := &Options{Files: []string{eslintConfigJS}}
 
-	handleMissingTypes(options)
+	handleMissingTypes(packageJsonOptions.IsESM, options)
 	useBaseConfigs(options)
-	replaceRequire(packageJsonOptions.IsModule)
+	handleModuleType(packageJsonOptions.IsESM)
 	run()
 
 	return options

@@ -1,7 +1,6 @@
 package eslintconfig
 
 import (
-	"regexp"
 	"strings"
 
 	"github.com/robinbobin/create-project/utils"
@@ -18,16 +17,6 @@ func run() {
 		}
 
 		errorMessage := stdout.String()
-
-		directoryImportRE := regexp.MustCompile(`Directory import '[^']*node_modules/([^']+)`)
-
-		matches := directoryImportRE.FindStringSubmatch(errorMessage)
-
-		if len(matches) > 1 {
-			run()
-
-			return
-		}
 
 		if strings.Contains(errorMessage, `Cannot redefine plugin "react-hooks"`) {
 			//
