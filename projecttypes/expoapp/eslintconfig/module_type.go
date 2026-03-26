@@ -13,11 +13,11 @@ func handleModuleType(IsESM bool) {
 		return
 	}
 
-	rawContent, err := os.ReadFile(eslintConfigJS)
+	rawContent, err := os.ReadFile(utils.ESLINT_CONFIG_JS)
 
 	utils.PanicOnError(err)
 
-	file, err := os.Create(eslintConfigJS)
+	file, err := os.Create(utils.ESLINT_CONFIG_JS)
 
 	utils.PanicOnError(err)
 

@@ -69,7 +69,7 @@ func useBaseConfigs(options *Options) {
 	re := regexp.MustCompile(`(?s)import\s+.*?\s+from\s+['"]([^'"]+)['"]`)
 
 	// Read eslint.config.js and prepare the content for addition
-	rawContent, err := os.ReadFile(eslintConfigJS)
+	rawContent, err := os.ReadFile(utils.ESLINT_CONFIG_JS)
 
 	utils.PanicOnError(err)
 
@@ -82,7 +82,7 @@ func useBaseConfigs(options *Options) {
 	content = content[:separatorIndex+1]
 
 	// Overwrite eslint.config.js
-	file, err := os.Create(eslintConfigJS)
+	file, err := os.Create(utils.ESLINT_CONFIG_JS)
 
 	utils.PanicOnError(err)
 

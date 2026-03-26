@@ -27,7 +27,7 @@ func deleteNodeLinkerHoisted() {
 
 	utils.RunCmd("pnpm config --location project delete node-linker")
 
-	utils.PanicOnError(os.RemoveAll("node_modules"))
+	utils.PanicOnError(os.RemoveAll(utils.NODE_MODULES))
 
 	utils.RunCmd("pnpm install")
 }

@@ -31,9 +31,7 @@ func handleMissingTypes(IsESM bool, options *Options) {
 		return
 	}
 
-	const fileName = "custom.d.ts"
-
-	file, err := os.OpenFile(fileName, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	file, err := os.OpenFile(utils.CUSTOM_D_TS, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 
 	utils.PanicOnError(err)
 
@@ -42,10 +40,10 @@ func handleMissingTypes(IsESM bool, options *Options) {
 	}()
 
 	for _, moduleName := range dummyTypings {
-		_, err := fmt.Fprintf(file, "declare module '%v'", moduleName)
+		_, err = file.WriteString(utils.FormatDeclareModule(moduleName))
 
 		utils.PanicOnError(err)
 	}
 
-	options.Files = append(options.Files, fileName)
+	options.Files = append(options.Files, utils.CUSTOM_D_TS)
 }
