@@ -150,10 +150,8 @@ func useBaseConfigs(options *Options) {
 			".",
 		)
 
-		if len(parts) > 1 {
-			for index, part := range parts[1:] {
-				parts[index] = strings.ToUpper(part[:1]) + part[1:]
-			}
+		for index := 1; index < len(parts); index++ {
+			parts[index] = strings.ToUpper(parts[index][:1]) + parts[index][1:]
 		}
 
 		importName := fmt.Sprint(strings.Join(parts, ""), "Config")
