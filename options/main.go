@@ -1,6 +1,10 @@
 package options
 
 type options struct {
+	IsInstalled struct {
+		RNPaper  bool
+		ReactUse bool
+	}
 	IsESM          bool
 	IsProjectReset bool
 	TS             struct {
