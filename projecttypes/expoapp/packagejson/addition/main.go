@@ -20,6 +20,14 @@ func Run() {
 			Fn:   rnpaper.Add,
 			Name: "React Native Paper",
 		},
+		{
+			Fn:   addReactUse,
+			Name: "react-use",
+		},
+		{
+			Fn:   addTypeFest,
+			Name: "type-fest",
+		},
 	}
 
 	utils.PanicOnError(
