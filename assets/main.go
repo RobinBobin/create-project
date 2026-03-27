@@ -7,7 +7,7 @@ import (
 	"github.com/robinbobin/create-project/utils"
 )
 
-//go:embed assets/*
+//go:embed all:assets/*
 var assetsFS embed.FS
 
 var assets fs.FS
