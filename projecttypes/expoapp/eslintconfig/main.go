@@ -7,7 +7,7 @@ import (
 )
 
 func Process() {
-	options.Options.TS.Files = []string{utils.ESLINT_CONFIG_JS}
+	options.Options.AddFile(utils.ESLINT_CONFIG_JS)
 
 	handleMissingTypes()
 	useBaseConfigs()

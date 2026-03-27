@@ -46,5 +46,5 @@ func handleMissingTypes() {
 		utils.PanicOnError(err)
 	}
 
-	options.Options.TS.Files = append(options.Options.TS.Files, utils.CUSTOM_D_TS)
+	options.Options.AddFile(utils.CUSTOM_D_TS)
 }

@@ -63,10 +63,7 @@ func useBaseConfigs() {
 		return
 	}
 
-	options.Options.TS.Include = append(
-		options.Options.TS.Include,
-		fmt.Sprintf("%v/**/*.js", eslint),
-	)
+	options.Options.AddInclude(fmt.Sprintf("%v/**/*.js", eslint))
 
 	utils.PanicOnError(os.Mkdir(eslint, 0775))
 
