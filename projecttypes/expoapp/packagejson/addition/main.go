@@ -9,6 +9,10 @@ import (
 func Run() {
 	actions := []*utils.Action[func()]{
 		{
+			Fn:   addMST,
+			Name: "MST tooling",
+		},
+		{
 			Fn:   addPrettier,
 			Name: "Prettier",
 		},
