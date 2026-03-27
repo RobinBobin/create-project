@@ -11,8 +11,12 @@ func uninstallPackages(isProjectReset bool) {
 	packages := []string{}
 
 	if isProjectReset {
-		packages = append(packages, "expo-haptics",
-			"expo-symbols")
+		packages = append(
+			packages,
+			"expo-haptics",
+			"expo-symbols",
+			"@react-navigation/bottom-tabs",
+		)
 	}
 
 	packages = utils.FilterOutUninstalled(packages)
