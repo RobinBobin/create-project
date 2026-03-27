@@ -7,6 +7,8 @@ import (
 	"github.com/robinbobin/create-project/utils"
 )
 
+const BABEL_CONFIG_JS = "babel.config.js"
+
 //go:embed all:assets/*
 var assetsFS embed.FS
 

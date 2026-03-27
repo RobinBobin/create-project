@@ -2,6 +2,7 @@ package addition
 
 import (
 	"github.com/charmbracelet/huh"
+	"github.com/robinbobin/create-project/projecttypes/expoapp/packagejson/addition/rnpaper"
 	"github.com/robinbobin/create-project/utils"
 )
 
@@ -10,6 +11,10 @@ func Run() {
 		{
 			Fn:   addPrettier,
 			Name: "Prettier",
+		},
+		{
+			Fn:   rnpaper.Add,
+			Name: "React Native Paper",
 		},
 	}
 
