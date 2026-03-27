@@ -7,10 +7,12 @@ import (
 func Lint() *Options {
 	options := &Options{}
 
-	setType(options)
-	resetProject(options)
+	options.IsProjectReset = resetProject()
+	options.IsESM = setType()
 
-	if !options.IsESM {
+	isSorted := options.IsESM || options.IsProjectReset
+
+	if !isSorted {
 		utils.AskSortJSON(utils.PACKAGE_JSON)
 	}
 

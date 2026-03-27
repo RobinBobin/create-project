@@ -4,51 +4,36 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
-	"strings"
 
 	"github.com/robinbobin/create-project/utils"
 )
 
-func resetProject(options *Options) {
-	if !utils.Confirm("Would you like to run `reset-project`?", true) {
+func resetProject() (isProjectReset bool) {
+	isProjectReset = utils.Confirm("Would you like to run `reset-project`?", true)
+
+	if !isProjectReset {
 		return
 	}
 
-	options.IsProjectReset = true
-
 	key := "reset-project"
 
-	if options.IsESM {
-		cjs := ".cjs"
-		js := ".js"
-		scripts := "scripts"
-		pathFile := filepath.Join(scripts, key)
+	// Invoke reset
+	utils.RunCmd(fmt.Sprintf("pnpm %v", key))
 
-		utils.PanicOnError(os.Rename(fmt.Sprint(pathFile, js), fmt.Sprint(pathFile, cjs)))
+	// Remove from package.json
+	jsonData := utils.ReadJSON(utils.PACKAGE_JSON)
+	object := jsonData["scripts"].(map[string]any)
 
-		jsonData := utils.ReadJSON(utils.PACKAGE_JSON)
-		object := jsonData[scripts].(map[string]any)
+	delete(object, key)
 
-		var cmd string
+	utils.WriteJSON(jsonData, utils.PACKAGE_JSON)
 
-		for objectKey, value := range object {
-			if objectKey == key {
-				cmd = strings.ReplaceAll(value.(string), js, cjs)
-
-				break
-			}
-		}
-
-		object[key] = cmd
-
-		utils.WriteJSON(jsonData, utils.PACKAGE_JSON)
-	}
-
-	utils.RunCmd(fmt.Sprint("pnpm", " ", key))
-
+	// Move sources
 	const app = "app"
 	const src = "src"
 
 	utils.PanicOnError(os.Mkdir(src, 0775))
 	utils.PanicOnError(os.Rename(app, filepath.Join(src, app)))
+
+	return
 }
