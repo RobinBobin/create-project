@@ -4,6 +4,7 @@ type options struct {
 	IsInstalled struct {
 		RNPaper  bool
 		ReactUse bool
+		TypeFest bool
 	}
 	IsESM          bool
 	IsProjectReset bool
