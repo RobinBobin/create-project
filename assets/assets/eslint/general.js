@@ -138,6 +138,10 @@ export default defineConfig([
         'error',
         ts.noConfusingVoidExpression
       ],
+      '@typescript-eslint/no-invalid-void-type': [
+        'error',
+        ts.noInvalidVoidType
+      ],
       '@typescript-eslint/no-loop-func': 'error',
       '@typescript-eslint/no-magic-numbers': ['error', ts.noMagicNumbers],
       '@typescript-eslint/no-shadow': ['error', ts.noShadow],
@@ -151,7 +155,10 @@ export default defineConfig([
       ],
       '@typescript-eslint/no-useless-empty-export': 'error',
       '@typescript-eslint/prefer-readonly': 'error',
-      '@typescript-eslint/prefer-readonly-parameter-types': 'error',
+      '@typescript-eslint/prefer-readonly-parameter-types': [
+        'error',
+        ts.preferReadonlyParameterTypes
+      ],
       '@typescript-eslint/restrict-template-expressions': [
         'error',
         ts.restrictTemplateExpressions
@@ -185,6 +192,12 @@ export default defineConfig([
       // simple-import-sort
       'simple-import-sort/exports': 'error',
       'simple-import-sort/imports': ['error', simpleImportSort.imports]
+    }
+  },
+  {
+    files: ['**/*.d.ts'],
+    rules: {
+      'import-x/no-unused-modules': 'off'
     }
   }
 ])

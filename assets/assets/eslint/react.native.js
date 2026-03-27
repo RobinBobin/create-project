@@ -9,7 +9,7 @@ export default defineConfig([
         'error',
         {
           ...ts.noShadow,
-          allow: ['StyleSheet', 'Text']
+          allow: ['Screen', 'StyleSheet', 'Text']
         }
       ]
     }
