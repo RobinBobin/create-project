@@ -4,7 +4,7 @@ import (
 	"github.com/robinbobin/create-project/utils"
 )
 
-func Lint() *Options {
+func Process() *Options {
 	options := &Options{}
 
 	options.IsProjectReset = resetProject()
