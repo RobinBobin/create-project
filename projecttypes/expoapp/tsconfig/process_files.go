@@ -3,10 +3,12 @@ package tsconfig
 import (
 	"fmt"
 	"slices"
+
+	"github.com/robinbobin/create-project/options"
 )
 
-func processFiles(fileNames []string, tsconfig map[string]any) {
-	if len(fileNames) == 0 {
+func processFiles(tsconfig map[string]any) {
+	if len(options.Options.TS.Files) == 0 {
 		return
 	}
 
@@ -15,19 +17,22 @@ func processFiles(fileNames []string, tsconfig map[string]any) {
 	switch rawFiles := tsconfig[key].(type) {
 	case []any:
 		for _, rawFile := range rawFiles {
-			fileNames = append(fileNames, rawFile.(string))
+			options.Options.TS.Files = append(
+				options.Options.TS.Files,
+				rawFile.(string),
+			)
 		}
 
-		slices.Sort(fileNames)
+		slices.Sort(options.Options.TS.Files)
 
-		fileNames = slices.Compact(fileNames)
+		options.Options.TS.Files = slices.Compact(options.Options.TS.Files)
 
 	case nil:
-		slices.Sort(fileNames)
+		slices.Sort(options.Options.TS.Files)
 
 	default:
 		panic(fmt.Errorf("\"%v\": \"%v\" is of type \"%T\", equals \"%v\" and can't be parsed", tsconfig_json, key, rawFiles, rawFiles))
 	}
 
-	tsconfig[key] = fileNames
+	tsconfig[key] = options.Options.TS.Files
 }

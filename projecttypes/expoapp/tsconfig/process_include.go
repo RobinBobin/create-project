@@ -4,26 +4,24 @@ import (
 	"fmt"
 	"slices"
 	"strings"
+
+	"github.com/robinbobin/create-project/options"
 )
 
-func processInclude(
-	include []string,
-	isProjectReset bool,
-	tsconfig map[string]any,
-) {
+func processInclude(tsconfig map[string]any) {
 	rawInclude := tsconfig["include"].([]any)
 
 	for index := range rawInclude {
 		pattern := rawInclude[index].(string)
 
-		if isProjectReset && strings.HasPrefix(pattern, "**") {
+		if options.Options.IsProjectReset && strings.HasPrefix(pattern, "**") {
 			pattern = fmt.Sprint("src/", pattern)
 		}
 
-		include = append(include, pattern)
+		options.Options.TS.Include = append(options.Options.TS.Include, pattern)
 	}
 
-	slices.Sort(include)
+	slices.Sort(options.Options.TS.Include)
 
-	tsconfig["include"] = include
+	tsconfig["include"] = options.Options.TS.Include
 }

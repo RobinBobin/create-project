@@ -5,11 +5,12 @@ import (
 	"regexp"
 	"strings"
 
+	"github.com/robinbobin/create-project/options"
 	"github.com/robinbobin/create-project/utils"
 )
 
-func handleModuleType(IsESM bool) {
-	if !IsESM {
+func handleModuleType() {
+	if !options.Options.IsESM {
 		return
 	}
 

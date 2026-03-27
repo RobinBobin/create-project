@@ -10,6 +10,7 @@ import (
 
 	"github.com/charmbracelet/huh"
 	"github.com/robinbobin/create-project/assets"
+	"github.com/robinbobin/create-project/options"
 	"github.com/robinbobin/create-project/utils"
 )
 
@@ -30,7 +31,7 @@ func (config config) String() string {
 	return strings.Join(parts, " ")
 }
 
-func useBaseConfigs(options *Options) {
+func useBaseConfigs() {
 	const eslint = "eslint"
 
 	// Get the file list from `assets/eslint`
@@ -62,7 +63,10 @@ func useBaseConfigs(options *Options) {
 		return
 	}
 
-	options.Include = append(options.Include, fmt.Sprintf("%v/**/*.js", eslint))
+	options.Options.TS.Include = append(
+		options.Options.TS.Include,
+		fmt.Sprintf("%v/**/*.js", eslint),
+	)
 
 	utils.PanicOnError(os.Mkdir(eslint, 0775))
 

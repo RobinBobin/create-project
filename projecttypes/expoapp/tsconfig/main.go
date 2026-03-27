@@ -1,28 +1,18 @@
 package tsconfig
 
 import (
-	"github.com/robinbobin/create-project/projecttypes/expoapp/eslintconfig"
-	"github.com/robinbobin/create-project/projecttypes/expoapp/packagejson"
 	"github.com/robinbobin/create-project/utils"
 )
 
 const tsconfig_json = "tsconfig.json"
 
-func Process(
-	eslintConfigOptions *eslintconfig.Options,
-	packageJsonOptions *packagejson.Options,
-) {
+func Process() {
 	tsconfig := utils.ReadJSON(tsconfig_json)
 
-	deleteCompilerOptions(packageJsonOptions.IsProjectReset, tsconfig)
+	deleteCompilerOptions(tsconfig)
 	processExtends(tsconfig)
-	processFiles(eslintConfigOptions.Files, tsconfig)
-
-	processInclude(
-		eslintConfigOptions.Include,
-		packageJsonOptions.IsProjectReset,
-		tsconfig,
-	)
+	processFiles(tsconfig)
+	processInclude(tsconfig)
 
 	utils.WriteJSON(tsconfig, tsconfig_json)
 }

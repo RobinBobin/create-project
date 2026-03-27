@@ -5,13 +5,14 @@ import (
 	"os"
 
 	"github.com/charmbracelet/huh"
+	"github.com/robinbobin/create-project/options"
 	"github.com/robinbobin/create-project/utils"
 )
 
-func handleMissingTypes(IsESM bool, options *Options) {
+func handleMissingTypes() {
 	extension := ""
 
-	if IsESM {
+	if options.Options.IsESM {
 		extension = ".js"
 	}
 
@@ -45,5 +46,5 @@ func handleMissingTypes(IsESM bool, options *Options) {
 		utils.PanicOnError(err)
 	}
 
-	options.Files = append(options.Files, utils.CUSTOM_D_TS)
+	options.Options.TS.Files = append(options.Options.TS.Files, utils.CUSTOM_D_TS)
 }
