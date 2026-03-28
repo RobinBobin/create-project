@@ -1,0 +1,4 @@
+const ONE_HALF = 0.5
+const SCREEN_PADDING = 15
+
+export { ONE_HALF, SCREEN_PADDING }

@@ -29,6 +29,9 @@ func Create() bool {
 	deleteNodeLinkerHoisted()
 
 	packagejson.Process()
+
+	copySources()
+
 	eslintconfig.Process()
 	tsconfig.Process()
 
