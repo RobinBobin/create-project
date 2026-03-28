@@ -16,6 +16,10 @@ func Run() {
 			Name: "Prettier",
 		},
 		{
+			Fn:   addRadashi,
+			Name: "Radashi",
+		},
+		{
 			Fn:   rnpaper.Add,
 			Name: "React Native Paper",
 		},
