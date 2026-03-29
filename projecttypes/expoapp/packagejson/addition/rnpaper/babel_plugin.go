@@ -15,7 +15,7 @@ func addBabelPlugin() {
 	assets.CreateBabelConfig()
 
 	fmt.Printf(
-		"Please add\n%v\n to your '%v'.\n",
+		"Please add\n%v\nto your '%v'.\n",
 		`env: {
   production: {
     plugins: ['react-native-paper/babel']
