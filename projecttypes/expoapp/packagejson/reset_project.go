@@ -30,10 +30,9 @@ func resetProject() (isProjectReset bool) {
 
 	// Move sources
 	const app = "app"
-	const src = "src"
 
-	utils.PanicOnError(os.Mkdir(src, 0775))
-	utils.PanicOnError(os.Rename(app, filepath.Join(src, app)))
+	utils.PanicOnError(os.Mkdir(utils.SRC, 0775))
+	utils.PanicOnError(os.Rename(app, filepath.Join(utils.SRC, app)))
 
 	return
 }

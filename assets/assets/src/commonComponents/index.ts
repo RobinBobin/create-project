@@ -1,6 +1,7 @@
 export { commonStyles } from './commonStyles'
 export { HorizontalGap } from './HorizontalGap'
 export { Pressable } from './Pressable'
+export { Screen } from './Screen'
 export { Snackbar } from './Snackbar'
 export { Text } from './Text'
 export { TouchableRipple } from './TouchableRipple'
