@@ -43,9 +43,12 @@ func (capturedOutput *capturedOutput) Write(p []byte) (n int, err error) {
 	return
 }
 
+type CmdPreProcessor = func(cmd *exec.Cmd)
+
 type CaptureCmdOutputOptions struct {
 	CapturedOutputProcessor capturedOutputProcessor
 	CmdWithArgs             string
+	PreProcessCmd           CmdPreProcessor
 	Stdout                  io.Writer
 }
 
@@ -53,6 +56,10 @@ func CaptureCmdOutput(options *CaptureCmdOutputOptions) {
 	// The command
 	cmdArray := strings.Split(options.CmdWithArgs, " ")
 	cmd := exec.Command(cmdArray[0], cmdArray[1:]...)
+
+	if options.PreProcessCmd != nil {
+		options.PreProcessCmd(cmd)
+	}
 
 	// ptmx
 	ptmx, closeptmx := openPTerminal(cmd)
