@@ -1,5 +1,5 @@
 import type { ColorValue, StyleProp } from 'react-native'
-import type { TColorData, TStyle } from './types'
+import type { TColorData } from './types'
 
 import { useTheme } from '@hooks'
 import { isFunction, isNullish } from 'radashi'
@@ -10,7 +10,7 @@ import { isColorName } from './isColorName'
 export const useColorNames = <T>(
   // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
   style: StyleProp<T>,
-  colorData: TColorData<T extends TStyle ? T : never>
+  colorData: TColorData
 ): T => {
   const theme = useTheme()
 

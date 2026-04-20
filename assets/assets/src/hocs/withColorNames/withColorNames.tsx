@@ -10,7 +10,7 @@ export const withColorNames = <
   TWrappedComponent extends React.JSXElementConstructor<any>
 >(
   WrappedComponent: TWrappedComponent,
-  colorData: TColorData<TStyle>
+  colorData: TColorData
 ): ReturnType<
   typeof forwardRef<
     React.ComponentRef<TWrappedComponent>,

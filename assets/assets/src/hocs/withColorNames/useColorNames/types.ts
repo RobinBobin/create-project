@@ -2,12 +2,15 @@ import type { TColor } from '@types'
 import type { ImageStyle, TextStyle, ViewStyle } from 'react-native'
 
 type TStyle = ImageStyle | TextStyle | ViewStyle
+type TStyleKeys<T extends TStyle = TStyle> = T extends unknown ? keyof T : never
+type TColorStyleKeys = Extract<TStyleKeys, 'color' | `${string}Color`>
 
-interface IColorDatum<T extends TStyle> {
-  colorKey: keyof T
+interface IColorDatum<T extends TColorStyleKeys> {
+  colorKey: T
   defaultColorName?: TColor
 }
 
-type TColorData<T extends TStyle> = readonly Readonly<IColorDatum<T>>[]
+type TColorData<T extends TColorStyleKeys = TColorStyleKeys> =
+  readonly Readonly<IColorDatum<T>>[]
 
-export type { IColorDatum, TColorData, TStyle }
+export type { TColorData, TStyle }
