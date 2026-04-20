@@ -5,31 +5,47 @@ import (
 	"github.com/robinbobin/create-project/utils"
 )
 
+type action struct {
+	utils.BatchAction
+}
+
 func Run() {
-	actions := []*utils.Action[func()]{
+	actions := []*action{
 		{
-			Fn:   addMST,
-			Name: "MST tooling",
+			utils.BatchAction{
+				Fn:   addMST,
+				Name: "MST tooling",
+			},
 		},
 		{
-			Fn:   addPrettier,
-			Name: "Prettier",
+			utils.BatchAction{
+				Fn:   addPrettier,
+				Name: "Prettier",
+			},
 		},
 		{
-			Fn:   addRadashi,
-			Name: "Radashi",
+			utils.BatchAction{
+				Fn:   addRadashi,
+				Name: "Radashi",
+			},
 		},
 		{
-			Fn:   rnpaper.Add,
-			Name: "React Native Paper",
+			utils.BatchAction{
+				Fn:   rnpaper.Add,
+				Name: "React Native Paper",
+			},
 		},
 		{
-			Fn:   addReactUse,
-			Name: "react-use",
+			utils.BatchAction{
+				Fn:   addReactUse,
+				Name: "react-use",
+			},
 		},
 		{
-			Fn:   addTypeFest,
-			Name: "type-fest",
+			utils.BatchAction{
+				Fn:   addTypeFest,
+				Name: "type-fest",
+			},
 		},
 	}
 

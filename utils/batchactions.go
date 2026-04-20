@@ -2,9 +2,19 @@ package utils
 
 import "github.com/charmbracelet/huh"
 
-func BatchActions(actions []*Action[func()], title string) {
+type batchActionFunc = func()
+
+type batchActionable interface {
+	comparable
+	GetFn() batchActionFunc
+	GetName() string
+}
+
+type BatchAction = Action[batchActionFunc]
+
+func BatchActions[A batchActionable](actions []A, title string) {
 	PanicOnError(
-		huh.NewMultiSelect[*Action[func()]]().
+		huh.NewMultiSelect[A]().
 			Title(title).
 			Options(huh.NewOptions(actions...)...).
 			Value(&actions).
@@ -16,6 +26,6 @@ func BatchActions(actions []*Action[func()], title string) {
 	}
 
 	for _, action := range actions {
-		action.Fn()
+		action.GetFn()()
 	}
 }
