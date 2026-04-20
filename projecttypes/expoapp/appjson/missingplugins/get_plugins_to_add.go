@@ -5,6 +5,7 @@ import (
 
 	"github.com/charmbracelet/huh"
 	"github.com/robinbobin/create-project/utils"
+	"github.com/robinbobin/create-project/utils/packagejson"
 )
 
 func getPluginsToAdd(plugins []any) []string {
@@ -12,7 +13,7 @@ func getPluginsToAdd(plugins []any) []string {
 	currentPlugins := []string{}
 	missingPlugins := []string{}
 
-	pluginsToCheck := utils.FilterOutUninstalled(
+	pluginsToCheck := packagejson.FilterOutUninstalled(
 		[]string{
 			"expo-font",
 			"expo-splash-screen",

@@ -11,6 +11,8 @@ import (
 )
 
 func getTemplateVersion() string {
+	fmt.Println("Determining the template version...")
+
 	ar := []string{"expo-template-default", "expo"}
 
 	stdout := strings.Builder{}

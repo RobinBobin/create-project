@@ -1,6 +1,7 @@
 package packagejson
 
 import (
+	"errors"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -31,7 +32,14 @@ func resetProject() (isProjectReset bool) {
 	// Move sources
 	const app = "app"
 
-	utils.PanicOnError(os.Mkdir(utils.SRC, 0775))
+	err := os.Mkdir(utils.SRC, 0775)
+
+	if errors.Is(err, os.ErrExist) {
+		return
+
+	}
+
+	utils.PanicOnError(err)
 	utils.PanicOnError(os.Rename(app, filepath.Join(utils.SRC, app)))
 
 	return

@@ -5,6 +5,7 @@ import (
 
 	"github.com/charmbracelet/huh"
 	"github.com/robinbobin/create-project/utils"
+	"github.com/robinbobin/create-project/utils/packagejson"
 )
 
 func uninstallPackages(isProjectReset bool) {
@@ -19,7 +20,7 @@ func uninstallPackages(isProjectReset bool) {
 		)
 	}
 
-	packages = utils.FilterOutUninstalled(packages)
+	packages = packagejson.FilterOutUninstalled(packages)
 
 	if len(packages) == 0 {
 		return

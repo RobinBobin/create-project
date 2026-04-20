@@ -1,13 +1,12 @@
 package expoapp
 
 import (
-	"fmt"
 	"os"
-	"strings"
 
 	"github.com/robinbobin/create-project/assets"
 	"github.com/robinbobin/create-project/options"
 	"github.com/robinbobin/create-project/utils"
+	"github.com/robinbobin/create-project/utils/packagejson"
 )
 
 func copySources() {
@@ -22,18 +21,7 @@ func copySources() {
 		"type-fest",
 	}
 
-	stdout := &strings.Builder{}
-
-	utils.CaptureCmdOutput(&utils.CaptureCmdOutputOptions{
-		CmdWithArgs: fmt.Sprintf("pnpm list %v --parseable", strings.Join(requiredPackages, " ")),
-		Stdout:      stdout,
-	})
-
-	lineCount := strings.Count(stdout.String(), "\n")
-
-	if (lineCount - 1) != len(requiredPackages) {
-		fmt.Println(stdout)
-		fmt.Println(lineCount, requiredPackages, strings.Join(requiredPackages, " "))
+	if !packagejson.AreInstalled(requiredPackages) {
 		return
 	}
 
@@ -42,7 +30,6 @@ func copySources() {
 	}
 
 	utils.PanicOnError(os.RemoveAll(utils.SRC))
-
 	utils.PanicOnError(assets.CopyFS(utils.SRC, utils.SRC))
 
 	options.Options.AreSourcesCopied = true
