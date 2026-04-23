@@ -92,4 +92,6 @@ func commentOut() {
 	_, err = customDTS.WriteString(content)
 
 	utils.PanicOnError(err)
+
+	fmt.Println("Fixed.")
 }
