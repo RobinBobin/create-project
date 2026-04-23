@@ -7,6 +7,7 @@ import (
 	"github.com/charmbracelet/huh"
 	"github.com/robinbobin/create-project/options"
 	"github.com/robinbobin/create-project/utils"
+	"github.com/robinbobin/create-project/utils/packagejson"
 )
 
 func handleMissingTypes() {
@@ -16,8 +17,14 @@ func handleMissingTypes() {
 		extension = ".js"
 	}
 
-	dummyTypings := []string{
-		fmt.Sprint("eslint-config-expo/flat", extension),
+	dummyTypings := []string{}
+
+	if packagejson.IsInstalled("eslint-config-expo") {
+		dummyTypings = append(dummyTypings, fmt.Sprint("eslint-config-expo/flat", extension))
+	}
+
+	if len(dummyTypings) == 0 {
+		return
 	}
 
 	utils.PanicOnError(
