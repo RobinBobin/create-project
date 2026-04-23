@@ -14,9 +14,9 @@ func uninstallPackages(isProjectReset bool) {
 	if isProjectReset {
 		packages = append(
 			packages,
+			"@react-navigation/bottom-tabs",
 			"expo-haptics",
 			"expo-symbols",
-			"@react-navigation/bottom-tabs",
 		)
 	}
 
