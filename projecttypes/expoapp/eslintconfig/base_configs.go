@@ -32,17 +32,15 @@ func (config config) String() string {
 }
 
 func useBaseConfigs() {
-	const eslint = "eslint"
-
 	// Get the file list from `assets/eslint`
-	entries, err := assets.ReadDir(eslint)
+	entries, err := assets.ReadDir(utils.ESLINT)
 
 	utils.PanicOnError(err)
 
 	configs := []config{}
 
 	for _, entry := range entries {
-		if entry.IsDir() {
+		if entry.IsDir() || entry.Name() == utils.ESLINT_CONFIG_JS {
 			continue
 		}
 
@@ -63,9 +61,9 @@ func useBaseConfigs() {
 		return
 	}
 
-	options.Options.AddInclude(fmt.Sprintf("%v/**/*.js", eslint))
+	options.Options.AddInclude(fmt.Sprintf("%v/**/*.js", utils.ESLINT))
 
-	utils.PanicOnError(os.Mkdir(eslint, 0775))
+	utils.PanicOnError(os.Mkdir(utils.ESLINT, 0775))
 
 	re := regexp.MustCompile(`(?s)import\s+.*?\s+from\s+['"]([^'"]+)['"]`)
 
@@ -94,7 +92,7 @@ func useBaseConfigs() {
 	var importNames []string
 
 	for _, config := range configs {
-		fileName := filepath.Join(eslint, config.fileName)
+		fileName := filepath.Join(utils.ESLINT, config.fileName)
 
 		// Copy the file
 		assets.CopyFile(fileName, fileName)
@@ -115,7 +113,7 @@ func useBaseConfigs() {
 
 			if strings.HasPrefix(parts[0], ".") {
 				// Relative import
-				dir := filepath.Join(eslint, parts[1])
+				dir := filepath.Join(utils.ESLINT, parts[1])
 				err := assets.CopyFS(dir, dir)
 
 				if !errors.Is(err, os.ErrExist) {

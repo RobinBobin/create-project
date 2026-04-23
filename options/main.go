@@ -2,6 +2,7 @@ package options
 
 type options struct {
 	AreSourcesCopied bool
+	HasESLint        bool
 	IsESM            bool
 	IsProjectReset   bool
 	TS               struct {
