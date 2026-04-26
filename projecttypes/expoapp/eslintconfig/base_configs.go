@@ -78,7 +78,13 @@ func useBaseConfigs() {
 	separatorIndex := strings.LastIndex(content, separator)
 	separatorIndex = strings.LastIndex(content[:separatorIndex], separator)
 
-	content = content[:separatorIndex+1]
+	content = content[:separatorIndex]
+
+	if content[len(content)-1] != ',' {
+		content += ","
+	}
+
+	content += "\n"
 
 	// Overwrite eslint.config.js
 	file, err := os.Create(utils.ESLINT_CONFIG_JS)
