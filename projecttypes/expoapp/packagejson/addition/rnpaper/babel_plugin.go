@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/robinbobin/create-project/assets"
+	"github.com/robinbobin/create-project/options"
 	"github.com/robinbobin/create-project/utils"
 )
 
@@ -14,13 +15,15 @@ func addBabelPlugin() {
 
 	assets.CreateBabelConfig()
 
-	fmt.Printf(
-		"Please add\n%v\nto your '%v'.\n",
+	hint := fmt.Sprintf(
+		"The following should be added to your '%v':\n%v",
+		assets.BABEL_CONFIG_JS,
 		`env: {
   production: {
     plugins: ['react-native-paper/babel']
   }
 }`,
-		assets.BABEL_CONFIG_JS,
 	)
+
+	options.Options.Hints = append(options.Options.Hints, hint)
 }

@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/robinbobin/create-project/options"
 	"github.com/robinbobin/create-project/utils"
 )
 
@@ -12,18 +13,28 @@ func main() {
 
 	action := getAction(*flags.projectType)
 
-	farewell := "Bye."
+	isDone := false
 
 	if action.Fn != nil {
 		wd, err := os.Getwd()
 		utils.PanicOnError(err)
 
 		if action.Fn() {
-			farewell = "Done."
+			isDone = true
 		}
 
 		utils.PanicOnError(os.Chdir(wd))
 	}
 
-	fmt.Println(farewell)
+	if !isDone {
+		fmt.Println("Bye.")
+
+		return
+	}
+
+	fmt.Println("Done.")
+
+	for _, hint := range options.Options.Hints {
+		fmt.Print("\n", hint, "\n")
+	}
 }

@@ -3,6 +3,7 @@ package options
 type options struct {
 	AreSourcesCopied  bool
 	HasESLint         bool
+	Hints             []string
 	IsESM             bool
 	IsProjectReset    bool
 	ShouldUseDefaults bool
