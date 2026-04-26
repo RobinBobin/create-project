@@ -6,6 +6,7 @@ require (
 	github.com/Masterminds/semver/v3 v3.4.0
 	github.com/charmbracelet/huh v0.8.0
 	github.com/creack/pty v1.1.24
+	github.com/spf13/pflag v1.0.10
 )
 
 require (
