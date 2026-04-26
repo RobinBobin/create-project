@@ -1,11 +1,12 @@
 package options
 
 type options struct {
-	AreSourcesCopied bool
-	HasESLint        bool
-	IsESM            bool
-	IsProjectReset   bool
-	TS               struct {
+	AreSourcesCopied  bool
+	HasESLint         bool
+	IsESM             bool
+	IsProjectReset    bool
+	ShouldUseDefaults bool
+	TS                struct {
 		Files   []string
 		Include []string
 	}

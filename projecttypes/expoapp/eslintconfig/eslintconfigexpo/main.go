@@ -10,6 +10,7 @@ import (
 
 	"github.com/Masterminds/semver/v3"
 	"github.com/charmbracelet/huh"
+	"github.com/robinbobin/create-project/options"
 	"github.com/robinbobin/create-project/utils"
 )
 
@@ -122,13 +123,15 @@ func HandleOutdated() {
 
 	action := actions[1]
 
-	utils.PanicOnError(
-		huh.NewSelect[*utils.Action[func()]]().
-			Title("What would you like to do?").
-			Options(huh.NewOptions(actions...)...).
-			Value(&action).
-			Run(),
-	)
+	if !options.Options.ShouldUseDefaults {
+		utils.PanicOnError(
+			huh.NewSelect[*utils.Action[func()]]().
+				Title("What would you like to do?").
+				Options(huh.NewOptions(actions...)...).
+				Value(&action).
+				Run(),
+		)
+	}
 
 	if action.Fn != nil {
 		action.Fn()

@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	"github.com/charmbracelet/huh"
+	"github.com/robinbobin/create-project/options"
 	"github.com/robinbobin/create-project/utils"
 )
 
@@ -37,13 +38,15 @@ func getTemplateVersion() string {
 
 	version := ar[1]
 
-	utils.PanicOnError(
-		huh.NewSelect[string]().
-			Title("Which Expo version would you like to use?").
-			Options(huh.NewOptions(ar...)...).
-			Value(&version).
-			Run(),
-	)
+	if !options.Options.ShouldUseDefaults {
+		utils.PanicOnError(
+			huh.NewSelect[string]().
+				Title("Which Expo version would you like to use?").
+				Options(huh.NewOptions(ar...)...).
+				Value(&version).
+				Run(),
+		)
+	}
 
 	return fmt.Sprint("sdk-", version)
 }

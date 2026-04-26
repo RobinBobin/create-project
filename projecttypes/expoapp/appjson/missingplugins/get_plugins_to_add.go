@@ -4,6 +4,7 @@ import (
 	"slices"
 
 	"github.com/charmbracelet/huh"
+	"github.com/robinbobin/create-project/options"
 	"github.com/robinbobin/create-project/utils"
 	"github.com/robinbobin/create-project/utils/packagejson"
 )
@@ -39,13 +40,15 @@ func getPluginsToAdd(plugins []any) []string {
 		return missingPlugins
 	}
 
-	utils.PanicOnError(
-		huh.NewMultiSelect[string]().
-			Title("Which missing plugins would you like to add to 'app.json'?").
-			Options(huh.NewOptions(missingPlugins...)...).
-			Value(&missingPlugins).
-			Run(),
-	)
+	if !options.Options.ShouldUseDefaults {
+		utils.PanicOnError(
+			huh.NewMultiSelect[string]().
+				Title("Which missing plugins would you like to add to 'app.json'?").
+				Options(huh.NewOptions(missingPlugins...)...).
+				Value(&missingPlugins).
+				Run(),
+		)
+	}
 
 	return missingPlugins
 }

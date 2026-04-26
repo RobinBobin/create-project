@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/robinbobin/create-project/options"
 	"github.com/spf13/pflag"
 )
 
@@ -14,7 +15,6 @@ const project_type_npm = "npm"
 
 type flags struct {
 	projectType *projectType
-	// shouldUseDefaults *bool
 }
 
 func parseFlags() flags {
@@ -27,18 +27,21 @@ func parseFlags() flags {
 
 	flags := flags{
 		projectType: pflag.String(
-			"projectType",
+			"project-type",
 			"",
 			fmt.Sprintf("Project type (%v).", projectTypes),
 		),
-		// shouldUseDefaults: pflag.Bool(
-		// 	"shouldUseDefaults",
-		// 	true,
-		// 	"Use defaults for prompts.",
-		// ),
 	}
 
+	shouldUseDefaults := pflag.Bool(
+		"use-defaults",
+		true,
+		"Use defaults for prompts.",
+	)
+
 	pflag.Parse()
+
+	options.Options.ShouldUseDefaults = *shouldUseDefaults
 
 	return flags
 }

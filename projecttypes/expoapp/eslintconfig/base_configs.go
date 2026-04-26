@@ -49,13 +49,15 @@ func useBaseConfigs() {
 		})
 	}
 
-	utils.PanicOnError(
-		huh.NewMultiSelect[config]().
-			Title("Would you like to add any of these custom ESLint configs?").
-			Options(huh.NewOptions(configs...)...).
-			Value(&configs).
-			Run(),
-	)
+	if !options.Options.ShouldUseDefaults {
+		utils.PanicOnError(
+			huh.NewMultiSelect[config]().
+				Title("Would you like to add any of these custom ESLint configs?").
+				Options(huh.NewOptions(configs...)...).
+				Value(&configs).
+				Run(),
+		)
+	}
 
 	if len(configs) == 0 {
 		return

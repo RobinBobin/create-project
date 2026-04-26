@@ -27,13 +27,15 @@ func handleMissingTypes() {
 		return
 	}
 
-	utils.PanicOnError(
-		huh.NewMultiSelect[string]().
-			Title("Which dummy typings do you need?").
-			Options(huh.NewOptions(dummyTypings...)...).
-			Value(&dummyTypings).
-			Run(),
-	)
+	if !options.Options.ShouldUseDefaults {
+		utils.PanicOnError(
+			huh.NewMultiSelect[string]().
+				Title("Which dummy typings do you need?").
+				Options(huh.NewOptions(dummyTypings...)...).
+				Value(&dummyTypings).
+				Run(),
+		)
+	}
 
 	if len(dummyTypings) == 0 {
 		return

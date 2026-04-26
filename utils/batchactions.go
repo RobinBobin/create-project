@@ -1,6 +1,9 @@
 package utils
 
-import "github.com/charmbracelet/huh"
+import (
+	"github.com/charmbracelet/huh"
+	"github.com/robinbobin/create-project/options"
+)
 
 type batchActionFunc = func()
 
@@ -13,16 +16,18 @@ type batchActionable interface {
 type BatchAction = Action[batchActionFunc]
 
 func BatchActions[A batchActionable](actions []A, title string) {
-	PanicOnError(
-		huh.NewMultiSelect[A]().
-			Title(title).
-			Options(huh.NewOptions(actions...)...).
-			Value(&actions).
-			Run(),
-	)
+	if !options.Options.ShouldUseDefaults {
+		PanicOnError(
+			huh.NewMultiSelect[A]().
+				Title(title).
+				Options(huh.NewOptions(actions...)...).
+				Value(&actions).
+				Run(),
+		)
 
-	if len(actions) == 0 {
-		return
+		if len(actions) == 0 {
+			return
+		}
 	}
 
 	for _, action := range actions {
