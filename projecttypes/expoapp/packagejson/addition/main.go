@@ -1,6 +1,9 @@
 package addition
 
 import (
+	"slices"
+	"strings"
+
 	"github.com/robinbobin/create-project/options"
 	"github.com/robinbobin/create-project/projecttypes/expoapp/packagejson/addition/rnpaper"
 	"github.com/robinbobin/create-project/utils"
@@ -43,6 +46,10 @@ func Run() {
 			Name: "ESLint",
 		})
 	}
+
+	slices.SortFunc(actions, func(a, b *utils.BatchAction) int {
+		return strings.Compare(a.Name, b.Name)
+	})
 
 	utils.BatchActions(actions, "Which of the following packages would you like to add?")
 }
