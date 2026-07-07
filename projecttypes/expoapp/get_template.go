@@ -11,7 +11,7 @@ import (
 	"github.com/robinbobin/create-project/utils"
 )
 
-func getTemplateVersion() string {
+func getTemplate() string {
 	fmt.Println("Determining the template version...")
 
 	ar := []string{"expo-template-default", "expo"}
@@ -33,7 +33,7 @@ func getTemplateVersion() string {
 	}
 
 	if ar[0] == ar[1] {
-		return "latest"
+		return ""
 	}
 
 	version := ar[1]
@@ -48,5 +48,5 @@ func getTemplateVersion() string {
 		)
 	}
 
-	return fmt.Sprint("sdk-", version)
+	return fmt.Sprintf("--template default@sdk-%v", version)
 }
