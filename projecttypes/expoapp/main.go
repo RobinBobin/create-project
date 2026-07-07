@@ -27,8 +27,6 @@ func Create() bool {
 	setPackageType()
 	addPrettier()
 
-	// packagejson.Process()
-
 	// copySources()
 
 	// eslintconfig.Process()
