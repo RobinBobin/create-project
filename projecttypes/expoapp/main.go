@@ -23,6 +23,9 @@ func Create() bool {
 	utils.UsePNPM()
 
 	deleteNodeLinkerHoisted()
+	resetProject()
+	setPackageType()
+	addPrettier()
 
 	// packagejson.Process()
 

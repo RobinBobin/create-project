@@ -1,4 +1,4 @@
-package packagejson
+package expoapp
 
 import (
 	"errors"

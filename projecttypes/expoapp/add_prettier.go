@@ -1,4 +1,4 @@
-package addition
+package expoapp
 
 import (
 	"path/filepath"

@@ -5,9 +5,5 @@ import (
 )
 
 func Process() {
-	resetProject()
-	setType()
-	uninstallPackages()
-
 	addition.Run()
 }

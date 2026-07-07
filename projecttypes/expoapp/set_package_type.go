@@ -1,10 +1,10 @@
-package packagejson
+package expoapp
 
 import (
 	"github.com/robinbobin/create-project/utils"
 )
 
-func setType() {
+func setPackageType() {
 	json := utils.ReadJSON(utils.PACKAGE_JSON)
 
 	json["type"] = "module"
