@@ -9,11 +9,11 @@ import (
 )
 
 func handleModuleType() {
-	rawContent, err := os.ReadFile(utils.ESLINT_CONFIG_JS)
+	rawContent, err := os.ReadFile(utils.ESLINT_CONFIG_TS)
 
 	utils.PanicOnError(err)
 
-	file, err := os.Create(utils.ESLINT_CONFIG_JS)
+	file, err := os.Create(utils.ESLINT_CONFIG_TS)
 
 	utils.PanicOnError(err)
 

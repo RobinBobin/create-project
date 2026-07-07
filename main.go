@@ -34,7 +34,7 @@ func main() {
 
 	fmt.Println("Done.")
 
-	for _, hint := range options.Options.Hints {
+	for _, hint := range options.Options.Hints.Hints {
 		fmt.Print("\n", hint, "\n")
 	}
 }

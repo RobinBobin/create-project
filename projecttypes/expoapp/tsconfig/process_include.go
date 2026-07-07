@@ -18,7 +18,7 @@ func processInclude(tsconfig map[string]any) {
 			pattern = fmt.Sprint("src/", pattern)
 		}
 
-		options.Options.AddInclude(pattern)
+		options.Options.TS.AddInclude(pattern)
 	}
 
 	slices.Sort(options.Options.TS.Include)

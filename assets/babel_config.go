@@ -22,7 +22,7 @@ func CreateBabelConfig() {
 
 	CopyFile(BABEL_CONFIG_JS, BABEL_CONFIG_JS)
 
-	options.Options.AddFile(BABEL_CONFIG_JS)
+	options.Options.TS.AddFile(BABEL_CONFIG_JS)
 
 	utils.RunCmd("pnpm install --save-dev @types/babel__core")
 

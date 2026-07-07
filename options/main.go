@@ -1,21 +1,34 @@
 package options
 
+// hints
+type hints struct {
+	Hints []string
+}
+
+func (hints *hints) Add(hint string) {
+	hints.Hints = append(hints.Hints, hint)
+}
+
+// ts
+type ts struct {
+	Files   []string
+	Include []string
+}
+
+func (ts *ts) AddFile(fileName string) {
+	ts.Files = append(ts.Files, fileName)
+}
+
+func (ts *ts) AddInclude(include string) {
+	ts.Include = append(ts.Include, include)
+}
+
+// options
 type options struct {
 	AreSourcesCopied  bool
-	Hints             []string
+	Hints             hints
 	ShouldUseDefaults bool
-	TS                struct {
-		Files   []string
-		Include []string
-	}
-}
-
-func (options *options) AddFile(fileName string) {
-	options.TS.Files = append(options.TS.Files, fileName)
-}
-
-func (options *options) AddInclude(include string) {
-	options.TS.Include = append(options.TS.Include, include)
+	TS                ts
 }
 
 var Options options

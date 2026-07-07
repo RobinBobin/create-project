@@ -17,7 +17,7 @@ func processFiles(tsconfig map[string]any) {
 	switch rawFiles := tsconfig[key].(type) {
 	case []any:
 		for _, rawFile := range rawFiles {
-			options.Options.AddFile(rawFile.(string))
+			options.Options.TS.AddFile(rawFile.(string))
 		}
 
 		slices.Sort(options.Options.TS.Files)

@@ -11,7 +11,7 @@ import (
 
 func commentOut() {
 	// Process eslint.config.js
-	rawContent, err := os.ReadFile(utils.ESLINT_CONFIG_JS)
+	rawContent, err := os.ReadFile(utils.ESLINT_CONFIG_TS)
 
 	utils.PanicOnError(err)
 
@@ -43,7 +43,7 @@ func commentOut() {
 		1,
 	)
 
-	eslintConfig, err := os.Create(utils.ESLINT_CONFIG_JS)
+	eslintConfig, err := os.Create(utils.ESLINT_CONFIG_TS)
 
 	utils.PanicOnError(err)
 

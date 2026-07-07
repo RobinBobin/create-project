@@ -25,5 +25,5 @@ func addBabelPlugin() {
 }`,
 	)
 
-	options.Options.Hints = append(options.Options.Hints, hint)
+	options.Options.Hints.Add(hint)
 }
