@@ -7,10 +7,6 @@ import (
 )
 
 func processCompilerOptions(tsconfig map[string]any) {
-	if !options.Options.IsProjectReset {
-		return
-	}
-
 	const compilerOptionsKey = "compilerOptions"
 
 	if !options.Options.AreSourcesCopied {

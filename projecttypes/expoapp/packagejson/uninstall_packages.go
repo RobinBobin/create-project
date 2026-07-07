@@ -9,19 +9,17 @@ import (
 	"github.com/robinbobin/create-project/utils/packagejson"
 )
 
-func uninstallPackages(isProjectReset bool) {
+func uninstallPackages() {
 	packages := []string{}
 
-	if isProjectReset {
-		packages = append(
-			packages,
-			"@react-navigation/bottom-tabs",
-			"expo-device",
-			"expo-glass-effect",
-			"expo-haptics",
-			"expo-symbols",
-		)
-	}
+	packages = append(
+		packages,
+		"@react-navigation/bottom-tabs",
+		"expo-device",
+		"expo-glass-effect",
+		"expo-haptics",
+		"expo-symbols",
+	)
 
 	packages = packagejson.FilterOutUninstalled(packages)
 

@@ -10,10 +10,6 @@ import (
 )
 
 func copySources() {
-	if !options.Options.IsProjectReset {
-		return
-	}
-
 	requiredPackages := []string{
 		"mobx-state-tree",
 		"radashi",

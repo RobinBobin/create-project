@@ -9,13 +9,7 @@ import (
 	"github.com/robinbobin/create-project/utils"
 )
 
-func resetProject() (isProjectReset bool) {
-	isProjectReset = utils.Confirm("Would you like to run `reset-project`?", true)
-
-	if !isProjectReset {
-		return
-	}
-
+func resetProject() {
 	key := "reset-project"
 
 	// Invoke reset
@@ -36,11 +30,8 @@ func resetProject() (isProjectReset bool) {
 
 	if errors.Is(err, os.ErrExist) {
 		return
-
 	}
 
 	utils.PanicOnError(err)
 	utils.PanicOnError(os.Rename(app, filepath.Join(utils.SRC, app)))
-
-	return
 }

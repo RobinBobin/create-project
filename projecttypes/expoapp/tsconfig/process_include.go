@@ -14,7 +14,7 @@ func processInclude(tsconfig map[string]any) {
 	for index := range rawInclude {
 		pattern := rawInclude[index].(string)
 
-		if options.Options.IsProjectReset && strings.HasPrefix(pattern, "**") {
+		if strings.HasPrefix(pattern, "**") {
 			pattern = fmt.Sprint("src/", pattern)
 		}
 

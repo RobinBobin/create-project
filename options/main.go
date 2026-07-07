@@ -5,7 +5,6 @@ type options struct {
 	HasESLint         bool
 	Hints             []string
 	IsESM             bool
-	IsProjectReset    bool
 	ShouldUseDefaults bool
 	TS                struct {
 		Files   []string
