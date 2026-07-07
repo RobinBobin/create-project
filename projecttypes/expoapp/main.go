@@ -2,7 +2,6 @@ package expoapp
 
 import (
 	"github.com/robinbobin/create-project/assets"
-	"github.com/robinbobin/create-project/options"
 	"github.com/robinbobin/create-project/projecttypes/expoapp/appjson"
 	"github.com/robinbobin/create-project/projecttypes/expoapp/eslintconfig"
 	"github.com/robinbobin/create-project/projecttypes/expoapp/packagejson"
@@ -33,12 +32,8 @@ func Create() bool {
 
 	copySources()
 
-	if options.Options.HasESLint {
-		eslintconfig.Process()
-	}
-
+	eslintconfig.Process()
 	tsconfig.Process()
-
 	appjson.Lint()
 
 	return true

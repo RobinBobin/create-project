@@ -2,7 +2,6 @@ package options
 
 type options struct {
 	AreSourcesCopied  bool
-	HasESLint         bool
 	Hints             []string
 	ShouldUseDefaults bool
 	TS                struct {

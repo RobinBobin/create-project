@@ -4,7 +4,6 @@ import (
 	"slices"
 	"strings"
 
-	"github.com/robinbobin/create-project/options"
 	"github.com/robinbobin/create-project/projecttypes/expoapp/packagejson/addition/rnpaper"
 	"github.com/robinbobin/create-project/utils"
 	"github.com/robinbobin/create-project/utils/packagejson"
@@ -38,9 +37,7 @@ func Run() {
 		},
 	}
 
-	options.Options.HasESLint = packagejson.IsInstalled(utils.ESLINT)
-
-	if !options.Options.HasESLint {
+	if !packagejson.IsInstalled(utils.ESLINT) {
 		actions = append(actions, &utils.BatchAction{
 			Fn:   addESLint,
 			Name: "ESLint",
