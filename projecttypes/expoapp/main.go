@@ -18,7 +18,7 @@ func Create() bool {
 		approveBuilds()
 	}
 
-	assets.AskCreateVSCodeWorkspace(appName)
+	assets.CreateVSCodeWorkspace(appName)
 
 	utils.UsePNPM()
 
