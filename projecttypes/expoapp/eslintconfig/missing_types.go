@@ -11,12 +11,7 @@ import (
 )
 
 func handleMissingTypes() {
-	extension := ""
-
-	if options.Options.IsESM {
-		extension = ".js"
-	}
-
+	extension := ".js"
 	dummyTypings := []string{}
 
 	if packagejson.IsInstalled("eslint-config-expo") {

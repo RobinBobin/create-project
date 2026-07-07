@@ -4,7 +4,6 @@ type options struct {
 	AreSourcesCopied  bool
 	HasESLint         bool
 	Hints             []string
-	IsESM             bool
 	ShouldUseDefaults bool
 	TS                struct {
 		Files   []string

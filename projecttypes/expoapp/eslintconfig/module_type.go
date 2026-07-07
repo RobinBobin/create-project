@@ -5,15 +5,10 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/robinbobin/create-project/options"
 	"github.com/robinbobin/create-project/utils"
 )
 
 func handleModuleType() {
-	if !options.Options.IsESM {
-		return
-	}
-
 	rawContent, err := os.ReadFile(utils.ESLINT_CONFIG_JS)
 
 	utils.PanicOnError(err)
