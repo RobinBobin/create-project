@@ -12,7 +12,7 @@ import (
 )
 
 func getTemplate() string {
-	fmt.Println("Determining the template version...")
+	fmt.Print("Determining the template... ")
 
 	ar := []string{"expo-template-default", "expo"}
 
@@ -32,13 +32,9 @@ func getTemplate() string {
 		ar[index] = strings.Split(stdout.String(), ".")[0]
 	}
 
-	if ar[0] == ar[1] {
-		return ""
-	}
-
 	version := ar[1]
 
-	if !options.Options.ShouldUseDefaults {
+	if ar[0] != ar[1] && !options.Options.ShouldUseDefaults {
 		utils.PanicOnError(
 			huh.NewSelect[string]().
 				Title("Which Expo version would you like to use?").
@@ -48,5 +44,9 @@ func getTemplate() string {
 		)
 	}
 
-	return fmt.Sprintf("--template default@sdk-%v", version)
+	template := fmt.Sprintf("default@sdk-%v", version)
+
+	fmt.Println(template)
+
+	return fmt.Sprintf("--template %v", template)
 }
