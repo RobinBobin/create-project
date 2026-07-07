@@ -6,7 +6,7 @@ import (
 )
 
 func Lint() {
-	utils.AskSortJSON("app.json")
+	utils.AskSortJSON(utils.APP_JSON)
 
 	missingplugins.AddMissingPlugins()
 }

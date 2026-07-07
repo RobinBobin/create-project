@@ -1,6 +1,7 @@
 package missingplugins
 
 import (
+	"fmt"
 	"slices"
 
 	"github.com/charmbracelet/huh"
@@ -43,7 +44,7 @@ func getPluginsToAdd(plugins []any) []string {
 	if !options.Options.ShouldUseDefaults {
 		utils.PanicOnError(
 			huh.NewMultiSelect[string]().
-				Title("Which missing plugins would you like to add to 'app.json'?").
+				Title(fmt.Sprintf("Which missing plugins would you like to add to '%v'?", utils.APP_JSON)).
 				Options(huh.NewOptions(missingPlugins...)...).
 				Value(&missingPlugins).
 				Run(),

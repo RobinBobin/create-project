@@ -16,6 +16,8 @@ func uninstallPackages(isProjectReset bool) {
 		packages = append(
 			packages,
 			"@react-navigation/bottom-tabs",
+			"expo-device",
+			"expo-glass-effect",
 			"expo-haptics",
 			"expo-symbols",
 		)

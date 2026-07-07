@@ -5,8 +5,7 @@ import (
 )
 
 func AddMissingPlugins() {
-	jsonFile := "app.json"
-	jsonData := utils.ReadJSON(jsonFile)
+	jsonData := utils.ReadJSON(utils.APP_JSON)
 
 	expo := jsonData["expo"].(map[string]any)
 	plugins, _ := expo["plugins"].([]any)
@@ -19,5 +18,5 @@ func AddMissingPlugins() {
 
 	expo["plugins"] = mergePlugins(plugins, pluginsToAdd)
 
-	utils.WriteJSON(jsonData, jsonFile)
+	utils.WriteJSON(jsonData, utils.APP_JSON)
 }

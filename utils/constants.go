@@ -1,5 +1,6 @@
 package utils
 
+const APP_JSON = "app.json"
 const CUSTOM_D_TS = "custom.d.ts"
 const ESLINT = "eslint"
 const ESLINT_CONFIG_JS = "eslint.config.js"
