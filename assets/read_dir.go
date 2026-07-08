@@ -2,9 +2,9 @@ package assets
 
 import (
 	"io/fs"
-	"path/filepath"
+	"path"
 )
 
 func ReadDir(name string) ([]fs.DirEntry, error) {
-	return assetsFS.ReadDir(filepath.Join("assets", name))
+	return assetsFS.ReadDir(path.Join("assets", name))
 }
