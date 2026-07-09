@@ -6,5 +6,5 @@ import (
 )
 
 func ReadDir(name string) ([]fs.DirEntry, error) {
-	return assetsFS.ReadDir(path.Join("assets", name))
+	return assetsFS.ReadDir(path.Join(ASSETS, name))
 }

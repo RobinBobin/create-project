@@ -10,7 +10,7 @@ import (
 	"github.com/robinbobin/create-project/utils"
 )
 
-func createConfig(baseConfigs []string) {
+func createConfig(configNames []string) {
 	buffer := bytes.Buffer{}
 	buffer.Grow(500)
 
@@ -40,8 +40,8 @@ func createConfig(baseConfigs []string) {
 	buffer.WriteString("\n")
 	buffer.WriteString("import { ")
 
-	for _, baseConfig := range baseConfigs {
-		fmt.Fprintf(&buffer, "%v,", baseConfig)
+	for _, configName := range configNames {
+		fmt.Fprintf(&buffer, "%v,", configName)
 	}
 
 	buffer.WriteString(" } from './eslint'\n")
@@ -51,8 +51,8 @@ func createConfig(baseConfigs []string) {
 	buffer.WriteString("export default defineConfig(\n")
 	buffer.WriteString("includeIgnoreFile(gitignore),\n")
 
-	for _, baseConfig := range baseConfigs {
-		fmt.Fprintf(&buffer, "%v,\n", baseConfig)
+	for _, configName := range configNames {
+		fmt.Fprintf(&buffer, "%v,\n", configName)
 	}
 
 	buffer.WriteString(")\n")

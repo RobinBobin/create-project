@@ -10,7 +10,7 @@ import (
 	"github.com/robinbobin/create-project/utils"
 )
 
-func copyBaseConfigs(baseConfigs []string) {
+func copyBaseConfigs(configNames []string) {
 	err := assets.CopyFS(utils.ESLINT, utils.ESLINT)
 
 	utils.PanicOnError(err)
@@ -25,8 +25,8 @@ func copyBaseConfigs(baseConfigs []string) {
 
 	buffer := bytes.Buffer{}
 
-	for _, baseConfig := range baseConfigs {
-		fmt.Fprintf(&buffer, "export { default as %v } from './%v'\n", baseConfig, baseConfig)
+	for _, configName := range configNames {
+		fmt.Fprintf(&buffer, "export { default as %v } from './%v'\n", configName, configName)
 	}
 
 	_, err = file.WriteString(buffer.String())

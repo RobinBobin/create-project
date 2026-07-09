@@ -1,10 +1,9 @@
 package eslintconfig
 
 func Process() {
-	addPackages()
+	configNames, dependencies := getConfigData()
 
-	baseConfigs := getBaseConfigs()
-
-	createConfig(baseConfigs)
-	copyBaseConfigs(baseConfigs)
+	addPackages(dependencies)
+	createConfig(configNames)
+	copyBaseConfigs(configNames)
 }

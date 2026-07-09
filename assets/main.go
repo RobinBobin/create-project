@@ -7,6 +7,7 @@ import (
 	"github.com/robinbobin/create-project/utils"
 )
 
+const ASSETS = "assets"
 const BABEL_CONFIG_JS = "babel.config.js"
 
 //go:embed all:assets/*
@@ -17,7 +18,7 @@ var assets fs.FS
 func init() {
 	var err error
 
-	assets, err = fs.Sub(assetsFS, "assets")
+	assets, err = fs.Sub(assetsFS, ASSETS)
 
 	utils.PanicOnError(err)
 }
