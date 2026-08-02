@@ -10,6 +10,7 @@ import (
 
 type projectType = string
 
+const project_type_copy_configs = "copy-configs"
 const project_type_expo = "expo"
 const project_type_npm = "npm"
 
@@ -20,6 +21,7 @@ type flags struct {
 func parseFlags() flags {
 	projectTypes := strings.Join(
 		[]string{
+			project_type_copy_configs,
 			project_type_expo,
 			project_type_npm,
 		},

@@ -5,6 +5,7 @@ import (
 	"slices"
 
 	"github.com/charmbracelet/huh"
+	"github.com/robinbobin/create-project/projecttypes/copyconfigs"
 	"github.com/robinbobin/create-project/projecttypes/expoapp"
 	"github.com/robinbobin/create-project/projecttypes/npmpackage"
 	"github.com/robinbobin/create-project/utils"
@@ -12,9 +13,10 @@ import (
 
 func getAction(projectType projectType) *utils.Action[func() bool] {
 	actions := map[string]*utils.Action[func() bool]{
-		project_type_expo: {Fn: expoapp.Create, Name: "Create an Expo app"},
-		project_type_npm:  {Fn: npmpackage.Create, Name: "Create an npm package"},
-		"exit":            {Name: "Exit"},
+		project_type_copy_configs: {Fn: copyconfigs.Create, Name: "Copy configs"},
+		project_type_expo:         {Fn: expoapp.Create, Name: "Create an Expo app"},
+		project_type_npm:          {Fn: npmpackage.Create, Name: "Create an npm package"},
+		"exit":                    {Name: "Exit"},
 	}
 
 	action := actions[projectType]

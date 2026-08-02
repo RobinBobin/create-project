@@ -2,7 +2,7 @@ package expoapp
 
 import (
 	"github.com/robinbobin/create-project/assets"
-	"github.com/robinbobin/create-project/projecttypes/expoapp/eslintconfig"
+	"github.com/robinbobin/create-project/assets/eslintconfig"
 	"github.com/robinbobin/create-project/utils"
 )
 
@@ -26,11 +26,12 @@ func Create() bool {
 	deleteNodeLinkerHoisted()
 	resetProject()
 	setPackageType()
-	addPrettier()
+
+	assets.AddPrettier()
+	eslintconfig.Process()
 
 	// copySources()
 
-	eslintconfig.Process()
 	// tsconfig.Process()
 	// appjson.Lint()
 

@@ -15,7 +15,7 @@ func processExtends(tsconfig map[string]any) {
 
 	const baseFile = "tsconfig.base"
 
-	assets.CopyFile(fmt.Sprintf("%v.json", baseFile), tsconfig_json)
+	assets.CopyFile(fmt.Sprintf("%v.json", baseFile), utils.TSCONFIG_JSON)
 
 	extends := []string{}
 
@@ -29,7 +29,7 @@ func processExtends(tsconfig map[string]any) {
 		}
 
 	default:
-		panic(fmt.Errorf("\"%v\": \"extends\" is of type \"%T\", equals \"%v\" and can't be parsed", tsconfig_json, ext, ext))
+		panic(fmt.Errorf("\"%v\": \"extends\" is of type \"%T\", equals \"%v\" and can't be parsed", utils.TSCONFIG_JSON, ext, ext))
 	}
 
 	extends = append(extends, fmt.Sprintf(".%c%v", filepath.Separator, baseFile))

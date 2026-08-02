@@ -5,6 +5,7 @@ import (
 	"slices"
 
 	"github.com/robinbobin/create-project/options"
+	"github.com/robinbobin/create-project/utils"
 )
 
 func processFiles(tsconfig map[string]any) {
@@ -28,7 +29,7 @@ func processFiles(tsconfig map[string]any) {
 		slices.Sort(options.Options.TS.Files)
 
 	default:
-		panic(fmt.Errorf("\"%v\": \"%v\" is of type \"%T\", equals \"%v\" and can't be parsed", tsconfig_json, key, rawFiles, rawFiles))
+		panic(fmt.Errorf("\"%v\": \"%v\" is of type \"%T\", equals \"%v\" and can't be parsed", utils.TSCONFIG_JSON, key, rawFiles, rawFiles))
 	}
 
 	tsconfig[key] = options.Options.TS.Files

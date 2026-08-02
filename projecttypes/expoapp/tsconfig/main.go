@@ -4,15 +4,13 @@ import (
 	"github.com/robinbobin/create-project/utils"
 )
 
-const tsconfig_json = "tsconfig.json"
-
 func Process() {
-	tsconfig := utils.ReadJSON(tsconfig_json)
+	tsconfig := utils.ReadJSON(utils.TSCONFIG_JSON)
 
 	processCompilerOptions(tsconfig)
 	processExtends(tsconfig)
 	processFiles(tsconfig)
 	processInclude(tsconfig)
 
-	utils.WriteJSON(tsconfig, tsconfig_json)
+	utils.WriteJSON(tsconfig, utils.TSCONFIG_JSON)
 }

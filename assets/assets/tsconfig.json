@@ -18,6 +18,7 @@
     "module": "ES2022",
     "moduleResolution": "Bundler",
     "noUncheckedSideEffectImports": true,
+    "types": ["node"],
 
     // Emit
     "noEmitOnError": true,

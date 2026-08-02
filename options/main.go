@@ -25,10 +25,11 @@ func (ts *ts) AddInclude(include string) {
 
 // options
 type options struct {
-	AreSourcesCopied  bool
-	Hints             hints
-	ShouldUseDefaults bool
-	TS                ts
+	AreSourcesCopied   bool
+	CanInstallPackages bool
+	Hints              hints
+	ShouldUseDefaults  bool
+	TS                 ts
 }
 
-var Options options
+var Options = options{CanInstallPackages: true}

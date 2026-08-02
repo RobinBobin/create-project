@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"fmt"
 	"os"
-	"path"
+	"path/filepath"
 
 	"github.com/robinbobin/create-project/assets"
 	"github.com/robinbobin/create-project/utils"
@@ -15,7 +15,7 @@ func copyBaseConfigs(configNames []string) {
 
 	utils.PanicOnError(err)
 
-	file, err := os.OpenFile(path.Join(utils.ESLINT, "index.ts"), os.O_CREATE|os.O_WRONLY, 0664)
+	file, err := os.OpenFile(filepath.Join(utils.ESLINT, "index.ts"), os.O_CREATE|os.O_WRONLY, 0664)
 
 	utils.PanicOnError(err)
 
