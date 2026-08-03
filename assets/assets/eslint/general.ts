@@ -8,13 +8,7 @@ import eslintPluginPromise from 'eslint-plugin-promise'
 import eslintPluginSimpleImportSort from 'eslint-plugin-simple-import-sort'
 import { configs as typescriptEslintConfigs } from 'typescript-eslint'
 
-import {
-  importX,
-  js,
-  simpleImportSort,
-  stylistic,
-  ts
-} from './ruleOptions/index.js'
+import { js, simpleImportSort, stylistic, ts } from './ruleOptions/index.js'
 
 export default defineConfig([
   eslintJs.configs.recommended,
@@ -124,7 +118,6 @@ export default defineConfig([
         stylistic.jsxCurlyBracePresence
       ],
       '@stylistic/jsx-pascal-case': 'error',
-      '@stylistic/jsx-sort-props': ['error', stylistic.jsxSortProps],
 
       // @typescript-eslint
       '@typescript-eslint/class-methods-use-this': 'error',
@@ -180,7 +173,6 @@ export default defineConfig([
       'import-x/no-mutable-exports': 'error',
       'import-x/no-self-import': 'error',
       'import-x/no-unassigned-import': 'error',
-      'import-x/no-unused-modules': ['error', importX.noUnusedModules],
       'import-x/no-useless-path-segments': 'error',
 
       //promise

@@ -40,8 +40,12 @@ func createConfig(configNames []string) {
 	buffer.WriteString("\n")
 	buffer.WriteString("import { ")
 
-	for _, configName := range configNames {
-		fmt.Fprintf(&buffer, "%v,", configName)
+	for index, configName := range configNames {
+		if index != 0 {
+			fmt.Fprintf(&buffer, ", ")
+		}
+
+		fmt.Fprint(&buffer, configName)
 	}
 
 	buffer.WriteString(" } from './eslint'\n")
