@@ -1,5 +1,0 @@
-Husky:
-  https://typicode.github.io/husky/get-started.html#install
-
-  pnpm add --save-dev husky
-  pnpm exec husky init

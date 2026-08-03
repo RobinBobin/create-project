@@ -2,18 +2,14 @@ package copyconfigs
 
 import (
 	"os"
-	"path"
 	"path/filepath"
 
 	"github.com/robinbobin/create-project/assets"
 	"github.com/robinbobin/create-project/assets/eslintconfig"
-	"github.com/robinbobin/create-project/options"
 	"github.com/robinbobin/create-project/utils"
 )
 
 func Create() bool {
-	options.Options.CanInstallPackages = false
-
 	// ESLint
 	eslintconfig.Process()
 
@@ -22,7 +18,7 @@ func Create() bool {
 
 	// TS
 	assets.CopyFile("tsconfig.base.json", utils.TSCONFIG_JSON)
-	options.Options.Hints.Add("pnpm i --save-dev tsconfig@6")
+	utils.RunCmd("pnpm install --save-dev typescript@6")
 
 	// VSCode workspace
 	dir, err := os.Getwd()
@@ -32,21 +28,14 @@ func Create() bool {
 	assets.CreateVSCodeWorkspace(filepath.Base(dir))
 
 	// husky
-	options.Options.Hints.Add(string(assets.ReadFile("husky")))
+	utils.RunCmd("pnpm install --save-dev husky")
+	utils.RunCmd("pnpm exec husky init")
 
 	// lint-staged
-	const lintstaged = "lint-staged"
 	const lintstagedrc = ".lintstagedrc.json"
 
-	assets.CopyFile(lintstagedrc, path.Join(lintstaged, lintstagedrc))
-
-	options.Options.Hints.Add(
-		string(
-			assets.ReadFile(
-				path.Join(lintstaged, "lint-staged"),
-			),
-		),
-	)
+	assets.CopyFile(lintstagedrc, lintstagedrc)
+	utils.RunCmd("pnpm install --save-dev lint-staged")
 
 	return true
 }

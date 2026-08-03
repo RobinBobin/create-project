@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/robinbobin/create-project/options"
 	"github.com/robinbobin/create-project/utils"
 )
 
@@ -25,21 +24,8 @@ func addPackages(dependencies []string) {
 		fmt.Sprintf("@types/node@%v", nodeVersion),
 	)
 
-	const dangerouslyAllowAllBuilds = "--dangerously-allow-all-builds"
-
-	cmd := fmt.Sprintf(
-		"pnpm install %v --save-dev %v",
-		dangerouslyAllowAllBuilds,
+	utils.RunCmd(fmt.Sprintf(
+		"pnpm install --dangerously-allow-all-builds --save-dev %v",
 		strings.Join(deps, " "),
-	)
-
-	if options.Options.CanInstallPackages {
-		utils.RunCmd(cmd)
-
-		return
-	}
-
-	cmd = strings.Replace(cmd, dangerouslyAllowAllBuilds, "", 1)
-
-	options.Options.Hints.Add(cmd)
+	))
 }
