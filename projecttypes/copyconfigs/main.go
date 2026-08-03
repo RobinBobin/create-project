@@ -2,6 +2,7 @@ package copyconfigs
 
 import (
 	"os"
+	"path"
 	"path/filepath"
 
 	"github.com/robinbobin/create-project/assets"
@@ -29,6 +30,23 @@ func Create() bool {
 	utils.PanicOnError(err)
 
 	assets.CreateVSCodeWorkspace(filepath.Base(dir))
+
+	// husky
+	options.Options.Hints.Add(string(assets.ReadFile("husky")))
+
+	// lint-staged
+	const lintstaged = "lint-staged"
+	const lintstagedrc = ".lintstagedrc.json"
+
+	assets.CopyFile(lintstagedrc, path.Join(lintstaged, lintstagedrc))
+
+	options.Options.Hints.Add(
+		string(
+			assets.ReadFile(
+				path.Join(lintstaged, "lint-staged"),
+			),
+		),
+	)
 
 	return true
 }
