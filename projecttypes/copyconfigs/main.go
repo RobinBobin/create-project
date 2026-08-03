@@ -1,6 +1,9 @@
 package copyconfigs
 
 import (
+	"os"
+	"path/filepath"
+
 	"github.com/robinbobin/create-project/assets"
 	"github.com/robinbobin/create-project/assets/eslintconfig"
 	"github.com/robinbobin/create-project/options"
@@ -21,7 +24,11 @@ func Create() bool {
 	options.Options.Hints.Add("pnpm i --save-dev tsconfig@6")
 
 	// VSCode workspace
-	// assets.CreateVSCodeWorkspace()
+	dir, err := os.Getwd()
+
+	utils.PanicOnError(err)
+
+	assets.CreateVSCodeWorkspace(filepath.Base(dir))
 
 	return true
 }
