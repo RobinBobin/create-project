@@ -18,7 +18,7 @@ func Create() bool {
 
 	// TS
 	assets.CopyFile("tsconfig.base.json", utils.TSCONFIG_JSON)
-	utils.RunCmd("pnpm install --save-dev typescript@6")
+	utils.PnpmInstall("pnpm install --save-dev typescript@6")
 
 	// VSCode workspace
 	dir, err := os.Getwd()
@@ -28,14 +28,14 @@ func Create() bool {
 	assets.CreateVSCodeWorkspace(filepath.Base(dir))
 
 	// husky
-	utils.RunCmd("pnpm install --save-dev husky")
+	utils.PnpmInstall("pnpm install --save-dev husky")
 	utils.RunCmd("pnpm exec husky init")
 
 	// lint-staged
 	const lintstagedrc = ".lintstagedrc.json"
 
 	assets.CopyFile(lintstagedrc, lintstagedrc)
-	utils.RunCmd("pnpm install --save-dev lint-staged")
+	utils.PnpmInstall("pnpm install --save-dev lint-staged")
 
 	return true
 }

@@ -24,7 +24,7 @@ func addPackages(dependencies []string) {
 		fmt.Sprintf("@types/node@%v", nodeVersion),
 	)
 
-	utils.RunCmd(fmt.Sprintf(
+	utils.PnpmInstall(fmt.Sprintf(
 		"pnpm install --dangerously-allow-all-builds --save-dev %v",
 		strings.Join(deps, " "),
 	))
