@@ -12,6 +12,8 @@ import (
 func Create() bool {
 	utils.GitInit()
 
+	assets.AddCommitizen()
+	assets.AddCommitlint()
 	assets.AddHusky()
 	assets.AddLintStaged()
 	assets.AddPrettier()
