@@ -1,4 +1,3 @@
-export { importX } from './importX/index.js'
 export { js } from './js/index.js'
 export { simpleImportSort } from './simpleImportSort/index.js'
 export { stylistic } from './stylistic/index.js'
