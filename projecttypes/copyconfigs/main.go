@@ -10,15 +10,14 @@ import (
 )
 
 func Create() bool {
-	// ESLint
-	eslint.Add()
+	utils.GitInit()
 
-	// Prettier
+	assets.AddHusky()
+	assets.AddLintStaged()
 	assets.AddPrettier()
+	assets.AddTypescript()
 
-	// TS
-	assets.CopyFile("tsconfig.base.json", utils.TSCONFIG_JSON)
-	utils.PnpmInstall("pnpm install --save-dev typescript@6")
+	eslint.Add()
 
 	// VSCode workspace
 	dir, err := os.Getwd()
@@ -26,16 +25,6 @@ func Create() bool {
 	utils.PanicOnError(err)
 
 	assets.CreateVSCodeWorkspace(filepath.Base(dir))
-
-	// husky
-	utils.PnpmInstall("pnpm install --save-dev husky")
-	utils.RunCmd("pnpm exec husky init")
-
-	// lint-staged
-	const lintstagedrc = ".lintstagedrc.json"
-
-	assets.CopyFile(lintstagedrc, lintstagedrc)
-	utils.PnpmInstall("pnpm install --save-dev lint-staged")
 
 	return true
 }
