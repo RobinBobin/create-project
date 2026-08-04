@@ -5,13 +5,13 @@ import (
 	"path/filepath"
 
 	"github.com/robinbobin/create-project/assets"
-	"github.com/robinbobin/create-project/assets/eslintconfig"
+	"github.com/robinbobin/create-project/assets/eslint"
 	"github.com/robinbobin/create-project/utils"
 )
 
 func Create() bool {
 	// ESLint
-	eslintconfig.Process()
+	eslint.Add()
 
 	// Prettier
 	assets.AddPrettier()

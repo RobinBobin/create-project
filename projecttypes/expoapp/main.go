@@ -2,7 +2,7 @@ package expoapp
 
 import (
 	"github.com/robinbobin/create-project/assets"
-	"github.com/robinbobin/create-project/assets/eslintconfig"
+	"github.com/robinbobin/create-project/assets/eslint"
 	"github.com/robinbobin/create-project/utils"
 )
 
@@ -28,7 +28,7 @@ func Create() bool {
 	setPackageType()
 
 	assets.AddPrettier()
-	eslintconfig.Process()
+	eslint.Add()
 
 	// copySources()
 

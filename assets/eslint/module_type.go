@@ -1,4 +1,4 @@
-package eslintconfig
+package eslint
 
 // import (
 // 	"os"

@@ -1,6 +1,6 @@
-package eslintconfig
+package eslint
 
-func Process() {
+func Add() {
 	configNames, dependencies := getConfigData()
 
 	addPackages(dependencies)

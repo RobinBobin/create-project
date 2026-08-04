@@ -1,4 +1,4 @@
-package eslintconfig
+package eslint
 
 // func createConfigs() {
 // 	// Get the file list from `assets/eslint`
