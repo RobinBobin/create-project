@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+exec < /dev/tty
+
+if [ -z "$2" ]; then
+  pnpm exec cz --hook
+fi
