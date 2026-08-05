@@ -1,7 +1,7 @@
-#!/usr/bin/env bash
+set -eu
 
 exec < /dev/tty
 
-if [ -z "$2" ]; then
+if [ -z "${2:-}" ]; then
   pnpm exec cz --hook
 fi
